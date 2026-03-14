@@ -1,450 +1,1578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XtermChat • Terminal-First Documentation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Fira+Code:wght@400;500&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #1e293b;
-            scroll-behavior: smooth;
-        }
-        .toc-link {
-            color: #64748b;
-            font-size: 0.875rem;
-            border-left: 2px solid transparent;
-            transition: all 0.2s ease;
-            padding: 0.4rem 0 0.4rem 1rem;
-            display: block;
-        }
-        .toc-link:hover { color: #0f172a; border-left-color: #cbd5e1; }
-        .toc-link.active-toc {
-            border-left-color: #3b82f6;
-            color: #2563eb;
-            font-weight: 600;
-            background: #f0f9ff;
-        }
-        code {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9em;
-            background: #f1f5f9;
-            padding: 0.2rem 0.4rem;
-            border-radius: 6px;
-            color: #0f172a;
-        }
-        pre {
-            background: #0f172a !important;
-            color: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.875rem;
-            line-height: 1.7;
-            border: 1px solid #1e293b;
-        }
-        .anchor { scroll-margin-top: 6rem; }
-        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
-        th { background: #f8fafc; text-align: left; padding: 12px; border: 1px solid #e2e8f0; font-weight: 700; }
-        td { padding: 12px; border: 1px solid #e2e8f0; color: #475569; }
-        .step-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            background: #2563eb;
-            color: white;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        .os-tag {
-            font-size: 0.65rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-left: 8px;
-        }
-        .cta-button {
-            background: #2563eb;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 10px rgba(37,99,235,0.2);
-        }
-        .cta-button:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(37,99,235,0.3);
-        }
-        .cta-outline {
-            background: white;
-            color: #1e293b;
-            border: 1.5px solid #e2e8f0;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .cta-outline:hover {
-            border-color: #2563eb;
-            color: #2563eb;
-            background: #f8fafc;
-        }
-        .prereq-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1.25rem;
-            transition: border 0.2s;
-        }
-        .prereq-card:hover {
-            border-color: #2563eb;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XtermChat — Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0a0a0f;
+  --surface:  #111118;
+  --border:   #1e1e2e;
+  --blue:     #3b82f6;
+  --blue-dim: #1d4ed8;
+  --blue-glow:#3b82f620;
+  --text:     #e2e8f0;
+  --muted:    #64748b;
+  --dim:      #334155;
+  --mono:     'JetBrains Mono', monospace;
+  --sans:     'DM Sans', sans-serif;
+  --sidebar-w: 240px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 4px; }
+
+/* ── Layout ── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand-logo {
+  width: 36px; height: 36px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.brand-title {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+  font-family: var(--mono);
+}
+
+.sidebar-nav {
+  padding: 16px 0;
+  flex: 1;
+}
+
+.nav-group-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 8px 20px 4px;
+  font-family: var(--mono);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px;
+  font-size: 12.5px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+  font-family: var(--mono);
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: var(--blue-glow);
+  border-left-color: var(--dim);
+}
+
+.nav-link.active {
+  color: var(--blue);
+  background: var(--blue-glow);
+  border-left-color: var(--blue);
+  font-weight: 600;
+}
+
+.nav-num {
+  font-size: 9px;
+  color: var(--dim);
+  min-width: 18px;
+}
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gh-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--border);
+  border: 1px solid var(--dim);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 11px;
+  font-family: var(--mono);
+  transition: all 0.15s;
+}
+
+.gh-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: var(--blue-glow);
+}
+
+/* ── Main ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  max-width: 860px;
+  padding: 60px 56px;
+}
+
+/* ── Section ── */
+.section {
+  margin-bottom: 80px;
+  scroll-margin-top: 40px;
+}
+
+/* ── Typography ── */
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  font-family: var(--mono);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h2 .h-num {
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 400;
+  padding: 2px 7px;
+  background: var(--blue-glow);
+  border: 1px solid var(--blue-dim);
+  border-radius: 4px;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 24px 0 10px;
+  font-family: var(--mono);
+}
+
+p { color: #94a3b8; margin-bottom: 14px; }
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+strong { color: var(--text); font-weight: 600; }
+
+/* ── Code ── */
+code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: var(--border);
+  color: #93c5fd;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--dim);
+}
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  overflow-x: auto;
+  margin: 16px 0;
+  position: relative;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.pre-label {
+  position: absolute;
+  top: 10px; right: 14px;
+  font-size: 9px;
+  font-family: var(--mono);
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Terminal block ── */
+.terminal {
+  background: #060609;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.terminal-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+
+.terminal-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+.terminal-body {
+  padding: 18px 20px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: #94a3b8;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.t-prompt { color: var(--blue); }
+.t-cmd    { color: #e2e8f0; }
+.t-out    { color: #64748b; }
+.t-green  { color: #4ade80; }
+.t-blue   { color: #93c5fd; }
+.t-yellow { color: #fbbf24; }
+.t-dim    { color: #334155; }
+
+/* ── Table ── */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 16px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th {
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 11px 16px;
+  color: #94a3b8;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #ffffff04; }
+
+td code { font-size: 12px; }
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.badge-green  { background: #052e16; color: #4ade80; border: 1px solid #166534; }
+.badge-red    { background: #2d0000; color: #f87171; border: 1px solid #7f1d1d; }
+.badge-blue   { background: var(--blue-glow); color: #93c5fd; border: 1px solid var(--blue-dim); }
+.badge-yellow { background: #1c1400; color: #fbbf24; border: 1px solid #78350f; }
+.badge-gray   { background: var(--border); color: var(--muted); border: 1px solid var(--dim); }
+
+/* ── Cards ── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+
+.card:hover { border-color: var(--blue); }
+
+.card-icon {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.card h4 {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.card p { font-size: 12.5px; margin: 0; }
+
+/* ── Steps ── */
+.steps { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: border-color 0.15s;
+}
+
+.step:hover { border-color: var(--blue); }
+
+.step-num {
+  min-width: 24px;
+  height: 24px;
+  background: var(--blue);
+  color: white;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.step-content { flex: 1; }
+.step-content p { margin: 0; font-size: 13.5px; }
+.step-content code { font-size: 12px; }
+
+/* ── Callout ── */
+.callout {
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 13.5px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.callout-info {
+  background: #0f172a;
+  border: 1px solid #1e3a5f;
+  color: #93c5fd;
+}
+
+.callout-warn {
+  background: #1c1400;
+  border: 1px solid #78350f;
+  color: #fbbf24;
+}
+
+.callout-tip {
+  background: #031a0e;
+  border: 1px solid #166534;
+  color: #86efac;
+}
+
+.callout-icon { font-size: 16px; margin-top: 1px; }
+.callout p { color: inherit; margin: 0; font-size: 13px; }
+
+/* ── Kbd ── */
+kbd {
+  font-family: var(--mono);
+  font-size: 11px;
+  background: var(--surface);
+  border: 1px solid var(--dim);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 2px 7px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* ── Shortcuts grid ── */
+.shortcuts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 20px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.shortcuts .key { text-align: right; white-space: nowrap; }
+.shortcuts .desc { color: #94a3b8; }
+.shortcuts .divider {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--border);
+  margin: 4px 0;
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 40px 0 56px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 64px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blue-glow);
+  border: 1px solid var(--blue-dim);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--blue);
+  margin-bottom: 20px;
+}
+
+.hero h1 { font-size: 36px; margin-bottom: 14px; }
+.hero p {
+  font-size: 16px;
+  color: #64748b;
+  max-width: 560px;
+  margin-bottom: 28px;
+}
+
+.hero-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue);
+  color: white;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.btn-primary:hover {
+  background: var(--blue-dim);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.btn-ghost:hover {
+  color: var(--text);
+  border-color: var(--dim);
+  text-decoration: none;
+}
+
+/* ── Stats row ── */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.stat { font-family: var(--mono); }
+.stat-val { font-size: 20px; font-weight: 700; color: var(--blue); }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ── API block ── */
+.api-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.api-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.method {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+
+.method-get  { background: #052e16; color: #4ade80; }
+.method-post { background: var(--blue-glow); color: #93c5fd; }
+
+.api-path { color: var(--text); font-weight: 500; }
+.api-desc { color: var(--muted); font-size: 12px; margin-left: auto; }
+
+.api-body { padding: 14px 18px; }
+.api-body p { font-size: 13px; margin-bottom: 8px; }
+.api-body pre { margin: 8px 0; }
+
+/* ── Mobile ── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  bottom: 20px; right: 20px;
+  z-index: 200;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  width: 48px; height: 48px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(59,130,246,0.4);
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.25s; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; padding: 32px 20px; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  h1 { font-size: 26px; }
+  h2 { font-size: 18px; }
+}
+</style>
 </head>
-<body class="antialiased">
+<body>
 
-<div class="max-w-[1400px] mx-auto px-6 lg:px-16 py-10">
+<button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
 
-    <!-- HEADER with strong CTA -->
-    <header class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-100 pb-8 mb-12">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-xl">X</div>
-            <div>
-                <h1 class="text-xl font-bold tracking-tight text-slate-900">XtermChat <span class="text-blue-600">Protocol</span></h1>
-                <p class="text-xs text-slate-400 font-mono">v1.0.0 Stable Build • March 2026</p>
-            </div>
-        </div>
+<div class="layout">
 
-        <!-- CTAs -->
-        <div class="flex items-center gap-3">
-            <a href="https://github.com/dnysaz/xtc-server" class="cta-button">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                Server
-            </a>
-            <a href="https://github.com/dnysaz/xtc-client" class="cta-outline">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                Client
-            </a>
-        </div>
-    </header>
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-logo">xtc</div>
+    <div class="brand-title">XtermChat</div>
+    <div class="brand-sub">v1.0.0 · March 2026</div>
+  </div>
 
-    <!-- LAYOUT: toc + main -->
-    <div class="flex flex-col lg:flex-row gap-16">
-        <!-- aside (toc) unchanged but class ok -->
-        <aside class="lg:w-64 shrink-0">
-            <div class="lg:sticky lg:top-10 space-y-1">
-                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 px-3">Documentation</p>
-                <a href="#introduction" class="toc-link">01. Introduction</a>
-                <a href="#how-it-works" class="toc-link">02. How it works</a>
-                <a href="#requirements" class="toc-link">03. Requirements</a>
-                <a href="#server-setup" class="toc-link">04. Server setup</a>
-                <a href="#client-setup" class="toc-link">05. Client setup</a>
-                <a href="#windows-support" class="toc-link">06. Windows Support</a>
-                <a href="#first-time-use" class="toc-link">07. First time use</a>
-                <a href="#cli-commands" class="toc-link">08. CLI commands</a>
-                <a href="#chat-interface" class="toc-link">09. Chat interface</a>
-                <a href="#web-interface" class="toc-link">10. Web interface</a>
-                <a href="#room-management" class="toc-link">11. Room management</a>
-                <a href="#identity-security" class="toc-link">12. Identity & security</a>
-                <a href="#https-setup" class="toc-link">13. HTTPS setup</a>
-                <a href="#server-management" class="toc-link">14. Server management</a>
-                <a href="#database" class="toc-link">15. Database</a>
-                <a href="#api-reference" class="toc-link">16. API reference</a>
-                <a href="#troubleshooting" class="toc-link">17. Troubleshooting</a>
-                <a href="#faq" class="toc-link">18. FAQ</a>
-            </div>
-        </aside>
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Getting Started</div>
+    <a href="#introduction"   class="nav-link"><span class="nav-num">01</span> Introduction</a>
+    <a href="#how-it-works"   class="nav-link"><span class="nav-num">02</span> How it works</a>
+    <a href="#requirements"   class="nav-link"><span class="nav-num">03</span> Requirements</a>
+    <a href="#server-setup"   class="nav-link"><span class="nav-num">04</span> Server setup</a>
+    <a href="#client-setup"   class="nav-link"><span class="nav-num">05</span> Client setup</a>
+    <a href="#first-use"      class="nav-link"><span class="nav-num">06</span> First time use</a>
 
-        <!-- main content -->
-        <main class="flex-1 min-w-0 prose prose-slate max-w-none prose-h2:scroll-mt-20">
+    <div class="nav-group-label" style="margin-top:12px">Usage</div>
+    <a href="#cli-commands"   class="nav-link"><span class="nav-num">07</span> CLI commands</a>
+    <a href="#chat-interface" class="nav-link"><span class="nav-num">08</span> Chat interface</a>
+    <a href="#web-interface"  class="nav-link"><span class="nav-num">09</span> Web interface</a>
+    <a href="#rooms"          class="nav-link"><span class="nav-num">10</span> Room management</a>
+    <a href="#emoji"          class="nav-link"><span class="nav-num">11</span> Emoji shortcuts</a>
 
-            <!-- introduction unchanged but fine -->
-            <section id="introduction" class="anchor mb-20">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6 flex items-center">
-                    <span class="text-blue-600 mr-3">#</span> Introduction
-                </h2>
-                <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                    XtermChat is a lightweight, self-hosted chat system built for the terminal. Unlike third-party platforms, XtermChat stores nothing on external servers. You deploy the Gateway on your own infrastructure, and all communication remains private, encrypted, and under your absolute control.
-                </p>
-                <div class="grid md:grid-cols-2 gap-6 my-8">
-                    <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
-                        <span class="text-xl mb-3 block">👤</span>
-                        <h4 class="font-bold text-slate-900 mb-2">Who is this for?</h4>
-                        <ul class="text-sm text-slate-600 space-y-2 list-disc list-inside">
-                            <li>Sysadmins & Developers</li>
-                            <li>Privacy-focused teams</li>
-                            <li>Homelab enthusiasts</li>
-                            <li>Internal secure comms</li>
-                        </ul>
-                    </div>
-                    <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl overflow-x-auto">
-                        <h4 class="font-bold text-slate-900 mb-3">⚡ Comparison</h4>
-                        <table class="text-xs">
-                            <thead><tr><th>Feature</th><th>XtermChat</th><th>Slack</th></tr></thead>
-                            <tbody>
-                                <tr><td>Self-hosted</td><td>✅</td><td>❌</td></tr>
-                                <tr><td>Setup Time</td><td>~5 Min</td><td>Instant</td></tr>
-                                <tr><td>RAM Usage</td><td>~30MB</td><td>High</td></tr>
-                                <tr><td>Terminal-First</td><td>✅</td><td>❌</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+    <div class="nav-group-label" style="margin-top:12px">Advanced</div>
+    <a href="#identity"       class="nav-link"><span class="nav-num">12</span> Identity & security</a>
+    <a href="#https"          class="nav-link"><span class="nav-num">13</span> HTTPS setup</a>
+    <a href="#server-mgmt"    class="nav-link"><span class="nav-num">14</span> Server management</a>
+    <a href="#database"       class="nav-link"><span class="nav-num">15</span> Database</a>
+    <a href="#api"            class="nav-link"><span class="nav-num">16</span> API reference</a>
 
-            <!-- how it works (same) -->
-            <section id="how-it-works" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">How it works</h2>
-                <p class="text-slate-600 mb-6 italic">XtermChat Architecture Diagram:</p>
-                <pre class="font-mono text-xs md:text-sm">
-┌─────────────────────────────────────────────────────────┐
-│                      YOUR VPS                           │
-│   xtc-server (Flask + SQLite) on :8080                  │
-│   ┌──────────┐   ┌──────────┐   ┌──────────┐            │
-│   │  rooms   │   │ messages │   │  users   │            │
-│   └──────────┘   └──────────┘   └──────────┘            │
-│          xtc.db (single file)                           │
-└───────────────────────┬─────────────────────────────────┘
-                        │ REST API (JSON)
-          ┌─────────────┼──────────────┐
-          │             │              │
-   ┌──────▼──────┐ ┌────▼──────┐  ┌────▼──────┐
-   │  CLI Client │ │Web Browser│  │ CLI Client│
-   │  (macOS)    │ │  :5000    │  │ (Windows) │
-   └─────────────┘ └───────────┘  └───────────┘
-                </pre>
-                <p class="text-sm text-slate-500 mt-4">Backend: Python+Flask, Database: SQLite. The CLI uses <code>rich</code> and <code>prompt_toolkit</code> for the UI. Auth: Username + Hardware PIN (CLI) or 5-digit PIN (Web).</p>
-            </section>
+    <div class="nav-group-label" style="margin-top:12px">Help</div>
+    <a href="#troubleshooting" class="nav-link"><span class="nav-num">17</span> Troubleshooting</a>
+    <a href="#faq"             class="nav-link"><span class="nav-num">18</span> FAQ</a>
+  </div>
 
-            <!-- REQUIREMENTS – upgraded to prereq cards (clear) -->
-            <section id="requirements" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                    <span>📋</span> Prerequisites
-                </h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="prereq-card">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="w-8 h-8 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-lg">🖥️</span>
-                            <h3 class="font-bold text-slate-800">Server requirements</h3>
-                        </div>
-                        <ul class="text-sm text-slate-600 space-y-2 list-inside list-disc">
-                            <li>Ubuntu 20.04+ / Debian 11+</li>
-                            <li>Python 3.8+ & pip</li>
-                            <li>Open port 8080 (TCP)</li>
-                            <li>Min. 512 MB RAM</li>
-                            <li>Optional: systemd (for auto-restart)</li>
-                        </ul>
-                    </div>
-                    <div class="prereq-card">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="w-8 h-8 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-lg">💻</span>
-                            <h3 class="font-bold text-slate-800">Client requirements</h3>
-                        </div>
-                        <ul class="text-sm text-slate-600 space-y-2 list-inside list-disc">
-                            <li>macOS 11+ / Linux kernel 5.x / Windows 10+</li>
-                            <li>Python 3.8+ and pip</li>
-                            <li>Terminal with UTF-8 support</li>
-                            <li>For Linux: <code>xclip</code> or <code>xsel</code> (optional, for copy)</li>
-                            <li>Windows Terminal (recommended)</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mt-4 bg-amber-50 p-4 rounded-xl border border-amber-200 text-amber-800 text-sm">
-                    <span class="font-bold">💡 Note:</span> Windows users — please see the dedicated Windows section below.
-                </div>
-            </section>
+  <div class="sidebar-footer">
+    <a href="https://github.com/dnysaz/xtc-server" class="gh-btn">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      xtc-server
+    </a>
+    <a href="https://github.com/dnysaz/xtc-client" class="gh-btn">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      xtc-client
+    </a>
+  </div>
+</nav>
 
-            <!-- server / client quick sections (keep minimal) -->
-            <section id="server-setup" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">⚙️ Server setup</h2>
-                <div class="space-y-4">
-                    <div class="flex items-start"><span class="step-badge">1</span><code class="flex-1">git clone https://github.com/dnysaz/xtc-server.git && cd xtc-server</code></div>
-                    <div class="flex items-start"><span class="step-badge">2</span><code class="flex-1">pip3 install flask flask-cors werkzeug</code></div>
-                    <div class="flex items-start"><span class="step-badge">3</span><code class="flex-1">sudo ufw allow 8080 && sudo ufw enable</code></div>
-                    <div class="flex items-start"><span class="step-badge">4</span><code class="flex-1">python3 server.py start</code></div>
-                </div>
-                <p class="text-xs text-slate-400 mt-4">Auto‑creates <code>xtc.db</code>, <code>server.log</code>.</p>
-            </section>
+<!-- ═══ MAIN ═══ -->
+<main class="main">
 
-            <section id="client-setup" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">💾 Client setup</h2>
-                <pre>git clone https://github.com/dnysaz/xtc-client.git
-cd xtc-client
-make install   # (Mac/Linux – for Windows see below)
-xtc</pre>
-                <p class="text-sm text-slate-500">Configuration stored in <code>~/.xtc_config.json</code>.</p>
-            </section>
-
-            <!-- WINDOWS SUPPORT – now fully matches theme (clean white/blue) -->
-            <section id="windows-support" class="anchor mb-20 p-8 bg-white border border-blue-200 rounded-3xl shadow-sm">
-                <h2 class="text-2xl font-bold text-blue-800 mb-4 flex items-center gap-3">
-                    <span class="w-9 h-9 bg-blue-600 text-white rounded-xl flex items-center justify-center text-sm">⊞</span>
-                    Windows Support (Native)
-                </h2>
-                <p class="text-blue-700 leading-relaxed mb-6">
-                    XtermChat runs <strong>natively on Windows</strong> — no WSL, no Docker required. Use it directly in PowerShell, CMD, or Windows Terminal.
-                </p>
-                <div class="bg-slate-50 p-6 rounded-xl space-y-5 border border-slate-200">
-                    <h4 class="font-bold text-sm text-slate-700 uppercase tracking-wide">🔧 Installation steps for Windows</h4>
-                    <ol class="text-sm text-slate-600 space-y-4 list-decimal list-inside marker:text-blue-600">
-                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">1</span> <span>Download and install <strong>Python 3.10+</strong> from <a href="https://python.org" class="text-blue-600 underline">python.org</a> (ensure "Add to PATH" is checked).</span></li>
-                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">2</span> <span>Install <strong>Windows Terminal</strong> from Microsoft Store (for best emoji/unicode support).</span></li>
-                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">3</span> <span>Open <strong>Command Prompt</strong> or PowerShell and run:<br> <code class="bg-white border">git clone https://github.com/dnysaz/xtc-client.git</code></span></li>
-                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">4</span> <span>Enter folder and install dependencies:<br> <code class="bg-white border">cd xtc-client & pip install -r requirements.txt</code></span></li>
-                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">5</span> <span>Run client: <code class="bg-white border">python xtc.py</code> or create an alias.</span></li>
-                    </ol>
-                    <div class="mt-4 p-4 bg-blue-50 border-l-4 border-blue-400 text-xs text-blue-800 font-medium rounded">
-                        ✅ Clipboard integration works via <code>clip</code> / PowerShell <code>Set-Clipboard</code>. Emoji fully supported in Windows Terminal.
-                    </div>
-                </div>
-            </section>
-
-            <!-- rest of sections unchanged (but include them briefly for consistency) -->
-            <section id="first-time-use" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">First time use</h2>
-                <pre>xtc connect @YOUR_VPS_IP:8080
-xtc status
-xtc create:room @general
-xtc start:chat @general</pre>
-            </section>
-
-            <section id="cli-commands" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">CLI commands</h2>
-                <div class="overflow-x-auto border border-slate-200 rounded-xl">
-                    <table>
-                        <thead><tr><th>Command</th><th>Target</th><th>Description</th></tr></thead>
-                        <tbody>
-                            <tr><td><code>xtc connect @IP</code></td><td><span class="os-tag bg-slate-100">All</span></td><td>Save server connection</td></tr>
-                            <tr><td><code>xtc status</code></td><td><span class="os-tag bg-slate-100">All</span></td><td>Check current link</td></tr>
-                            <tr><td><code>xtc list:rooms</code></td><td><span class="os-tag bg-slate-100">All</span></td><td>Fetch all gateways</td></tr>
-                            <tr><td><code>xtc create:room @name</code></td><td><span class="os-tag bg-slate-100">All</span></td><td>Initialize new room</td></tr>
-                            <tr><td><code>xtc start:chat @name</code></td><td><span class="os-tag bg-slate-100">All</span></td><td>Launch Terminal TUI</td></tr>
-                            <tr><td><code>xtc delete:room @name</code></td><td><span class="os-tag bg-slate-100">All</span></td><td>Remove (Creator Only)</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="chat-interface" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">Chat interface</h2>
-                <p class="text-slate-600 mb-4">The TUI features a dual-mode layout. Emoji shortcuts via <code>:fire</code> → 🔥.</p>
-                <div class="bg-slate-900 p-6 rounded-xl font-mono text-[10px] md:text-xs text-slate-300 leading-tight">
-                    ┌─ HEADER ─────────────────┬──── CHAT AREA ───────────┬─ SIDEBAR ─┐<br>
-                    │ ID KETUT  •  GATEWAY     │ now  You   ❯ hello       │ #GENERAL  │<br>
-                    │ AUTH LOCKED              │ 2m   AGUNG ❯ hey         │ creator.. │<br>
-                    └──────────────────────────┴──────────────────────────┴───────────┘
-                </div>
-                <div class="mt-4 flex gap-4 text-xs font-bold">
-                    <span class="bg-slate-100 px-2 py-1 rounded">[:clear] LOCAL WIPE</span>
-                    <span class="bg-blue-100 px-2 py-1 rounded text-blue-700">[:purge] SERVER WIPE</span>
-                    <span class="bg-slate-100 px-2 py-1 rounded">[:e] EMOJI PANEL</span>
-                </div>
-            </section>
-
-            <!-- identity, api, database, faq etc (shortened, keep style) -->
-            <section id="identity-security" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">Identity & security</h2>
-                <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
-                    <p class="text-sm leading-relaxed text-slate-700 mb-4"><strong>Hardware PIN:</strong> Username bound to Machine UUID. Only the original device can send as that user.</p>
-                    <p class="text-sm leading-relaxed text-slate-700"><strong>Encryption:</strong> Passwords hashed with <code>scrypt</code>. Room passwords never stored in plaintext.</p>
-                </div>
-            </section>
-
-            <section id="api-reference" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">API reference</h2>
-                <div class="overflow-x-auto border border-slate-200 rounded-xl">
-                    <table>
-                        <thead><tr><th>Endpoint</th><th>Method</th><th>Auth Required</th></tr></thead>
-                        <tbody>
-                            <tr><td><code>/rooms</code></td><td>GET</td><td>No</td></tr>
-                            <tr><td><code>/messages/&lt;room&gt;</code></td><td>GET</td><td>Password (if set)</td></tr>
-                            <tr><td><code>/send</code></td><td>POST</td><td>Valid PIN</td></tr>
-                            <tr><td><code>/purge-chat</code></td><td>POST</td><td>Creator PIN</td></tr>
-                            <tr><td><code>/delete-room</code></td><td>POST</td><td>Creator PIN</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="database" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">Database Structure</h2>
-                <ul class="text-xs font-mono space-y-2 bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <li><b>users</b>: <code>(username PRIMARY, pin TEXT)</code></li>
-                    <li><b>rooms</b>: <code>(name UNIQUE, creator, password, description, creator_pin)</code></li>
-                    <li><b>messages</b>: <code>(room, sender, content, timestamp, pin)</code></li>
-                </ul>
-            </section>
-
-            <section id="faq" class="anchor mb-32">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">FAQ</h2>
-                <div class="space-y-6">
-                    <div class="border-b border-slate-100 pb-4">
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">Messages permanent?</h4>
-                        <p class="text-sm text-slate-500">Only until Room Creator uses <code>:purge</code>.</p>
-                    </div>
-                    <div class="border-b border-slate-100 pb-4">
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">Hardware Reinstall?</h4>
-                        <p class="text-sm text-slate-500">Admin must delete entry from <code>users</code> table if hardware ID changes.</p>
-                    </div>
-                </div>
-            </section>
-
-            <footer class="pt-10 border-t border-slate-100 text-[10px] text-slate-400 uppercase tracking-widest flex justify-between items-center mb-10">
-                <span>© 2026 Ketut Dana — XtermChat Project</span>
-                <div class="flex gap-4">
-                    <a href="https://dnysaz.github.io/xtc-docs/" class="hover:text-blue-600">Documentation Site</a>
-                    <span class="text-slate-200">|</span>
-                    <span>MIT License</span>
-                </div>
-            </footer>
-        </main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">
+      <span>●</span> v1.0.0 Stable
     </div>
+    <h1>XtermChat<br><span style="color:var(--blue)">Documentation</span></h1>
+    <p>Self-hosted terminal chat. Your server, your data, your rules. Setup in under 10 minutes.</p>
+    <div class="hero-btns">
+      <a href="#server-setup" class="btn-primary">→ Quick Start</a>
+      <a href="https://github.com/dnysaz/xtc-server" class="btn-ghost">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        xtc-server ↗
+      </a>
+      <a href="https://github.com/dnysaz/xtc-client" class="btn-ghost">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        xtc-client ↗
+      </a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-val">~5 min</div><div class="stat-label">Server setup</div></div>
+      <div class="stat"><div class="stat-val">~30 MB</div><div class="stat-label">RAM usage</div></div>
+      <div class="stat"><div class="stat-val">2 deps</div><div class="stat-label">pip packages</div></div>
+      <div class="stat"><div class="stat-val">MIT</div><div class="stat-label">License</div></div>
+    </div>
+  </div>
+
+  <!-- 01 INTRODUCTION -->
+  <section class="section" id="introduction">
+    <h2><span class="h-num">01</span> Introduction</h2>
+    <p>XtermChat is a lightweight, self-hosted chat system built for the terminal. Unlike third-party platforms, XtermChat stores nothing on external servers. You deploy the server on your own VPS, connect with the CLI client or a browser, and all messages stay on infrastructure you control.</p>
+    <p>It is designed for developers and sysadmins who want something simple that <em>just works</em> — without the overhead of Matrix, the enterprise focus of Mattermost, or the data concerns of Slack.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>XtermChat</th><th>Matrix</th><th>Mattermost</th><th>Slack</th></tr></thead>
+        <tbody>
+          <tr><td>Self-hosted</td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-red">✗ No</span></td></tr>
+          <tr><td>Open source</td><td><span class="badge badge-green">✓ MIT</span></td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-yellow">⚠ Partial</span></td><td><span class="badge badge-red">✗ No</span></td></tr>
+          <tr><td>Setup time</td><td><strong>~5 min</strong></td><td>~2 hrs</td><td>~30 min</td><td>Instant</td></tr>
+          <tr><td>RAM usage</td><td><strong>~30 MB</strong></td><td>~1–2 GB</td><td>~300 MB</td><td>—</td></tr>
+          <tr><td>Terminal-first</td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-red">✗ No</span></td><td><span class="badge badge-red">✗ No</span></td><td><span class="badge badge-red">✗ No</span></td></tr>
+          <tr><td>Your data</td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-red">✗ No</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 02 HOW IT WORKS -->
+  <section class="section" id="how-it-works">
+    <h2><span class="h-num">02</span> How it works</h2>
+    <p>XtermChat has two parts: a <strong>server</strong> you deploy on a VPS, and a <strong>client</strong> your team installs on their machines. They communicate over a simple REST API with JSON payloads.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="terminal-label">architecture</span>
+      </div>
+      <div class="terminal-body"><span class="t-dim">
+        
+┌─────────────────────────────────────────────────┐
+│               YOUR VPS (:8080)                  │
+│   xtc-server  Python + Flask + SQLite           │
+│   ┌──────────┐  ┌──────────┐  ┌──────────┐      │
+│   │  rooms   │  │ messages │  │  users   │      │
+│   └──────────┘  └──────────┘  └──────────┘      │
+│            xtc.db  (single file)                │
+└──────────────────┬──────────────────────────────┘
+                   │  REST API over HTTP / HTTPS
+         ┌─────────┼──────────┐
+         │         │          │
+  ┌──────▼───┐ ┌───▼────┐ ┌───▼───────┐
+  │ CLI Mac  │ │Browser │ │ CLI Linux │
+  │ xtc-cli  │ │ :5000  │ │ xtc-cli   │
+  └──────────┘ └────────┘ └───────────┘</span></div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🐍</div>
+        <h4>Backend</h4>
+        <p>Python + Flask. Two pip packages. SQLite3 for storage — no external database needed.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⌨️</div>
+        <h4>CLI Client</h4>
+        <p>Built with <code>prompt_toolkit</code>. Full TUI with sidebar layout, emoji, link detection, and copy support.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h4>Web Client</h4>
+        <p>Flask serves static HTML. Same API as CLI — web and terminal users share rooms seamlessly.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔑</div>
+        <h4>Auth</h4>
+        <p>CLI uses hardware UUID (device-bound). Web uses a 5-digit PIN you choose. No accounts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 REQUIREMENTS -->
+  <section class="section" id="requirements">
+    <h2><span class="h-num">03</span> Requirements</h2>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🖥️</div>
+        <h4>Server</h4>
+        <p>Ubuntu 20.04+ or Debian 11+<br>Python 3.8+ and pip<br>Port 8080 open (TCP)<br>512 MB RAM minimum<br>Any $4–6/month VPS</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💻</div>
+        <h4>CLI Client</h4>
+        <p>macOS 11+ or Linux<br>Python 3.8+ and pip<br><code>make</code> for install<br>UTF-8 terminal<br><code>xclip</code> or <code>xsel</code> for copy (Linux)</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🪟</div>
+        <h4>Windows Client</h4>
+        <p>Python 3.10+ from python.org<br>Windows Terminal (recommended)<br>Run <code>python xtc.py</code> directly<br>Clipboard via <code>clip</code> built-in</p>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-icon">💡</div>
+      <p>The cheapest VPS tier from DigitalOcean, Hetzner, or Vultr ($4–6/month, 1 vCPU, 512 MB RAM) is more than enough to run XtermChat for a team of 2–50 people.</p>
+    </div>
+  </section>
+
+  <!-- 04 SERVER SETUP -->
+  <section class="section" id="server-setup">
+    <h2><span class="h-num">04</span> Server setup</h2>
+    <p>SSH into your VPS and follow these steps. The entire process takes about 5 minutes.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content"><p>Clone the server repository</p>
+        <pre><code>git clone https://github.com/dnysaz/xtc-server.git
+cd xtc-server</code></pre></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content"><p>Install dependencies</p>
+        <pre><code>pip3 install flask flask-cors werkzeug</code></pre></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content"><p>Open port 8080 in the firewall</p>
+        <pre><code>sudo ufw allow 8080
+sudo ufw enable
+sudo ufw status</code></pre>
+        <div class="callout callout-warn" style="margin-top:8px">
+          <div class="callout-icon">⚠️</div>
+          <p>If your VPS provider has a separate firewall panel (DigitalOcean, Vultr, Hetzner), also open TCP port 8080 there.</p>
+        </div></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content"><p>Start the server</p>
+        <pre><code>python3 server.py start
+# [*] Server started in background (PID: 12345)</code></pre></div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content"><p>Verify it's running</p>
+        <pre><code>curl http://localhost:8080
+# {"service": "XtermChat Gateway", "status": "online", "version": "1.1"}</code></pre></div>
+      </div>
+    </div>
+
+    <h3>File structure</h3>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">xtc-server/</span></div>
+      <div class="terminal-body"><span class="t-blue">xtc-server/</span>
+<span class="t-dim">├── </span><span class="t-cmd">server.py</span>      <span class="t-out">Flask app, all API routes</span>
+<span class="t-dim">├── </span><span class="t-cmd">db.py</span>          <span class="t-out">Database init and connection</span>
+<span class="t-dim">├── </span><span class="t-cmd">room.py</span>        <span class="t-out">Room CRUD, password hashing</span>
+<span class="t-dim">├── </span><span class="t-cmd">connection.py</span>  <span class="t-out">Message save and retrieval</span>
+<span class="t-dim">├── </span><span class="t-cmd">user.py</span>        <span class="t-out">User helpers</span>
+<span class="t-dim">├── </span><span class="t-cmd">check_db.py</span>    <span class="t-out">Interactive database inspector</span>
+<span class="t-dim">├── </span><span class="t-green">xtc.db</span>         <span class="t-out">SQLite database (auto-created)</span>
+<span class="t-dim">├── </span><span class="t-green">server.log</span>     <span class="t-out">Output log (auto-created)</span>
+<span class="t-dim">└── </span><span class="t-green">server.pid</span>     <span class="t-out">Process ID file (auto-created)</span></div>
+    </div>
+
+    <h3>Custom port</h3>
+    <p>Default is <code>8080</code>. To change it, edit the bottom of <code>server.py</code>:</p>
+    <pre><code>elif command == "run_internal":
+    app.run(host='0.0.0.0', port=9000)  # ← change here
+else:
+    app.run(host='0.0.0.0', port=9000)  # ← and here</code></pre>
+  </section>
+
+  <!-- 05 CLIENT SETUP -->
+  <section class="section" id="client-setup">
+    <h2><span class="h-num">05</span> Client setup</h2>
+
+    <h3>macOS / Linux</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content"><p>Clone the client</p>
+        <pre><code>git clone https://github.com/dnysaz/xtc-client.git
+cd xtc-client</code></pre></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content"><p>Install — creates global <code>xtc</code> command</p>
+        <pre><code>make install</code></pre></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content"><p>Verify</p>
+        <pre><code>xtc</code></pre></div>
+      </div>
+    </div>
+
+    <h3>Windows</h3>
+    <p>XtermChat runs natively on Windows — no WSL or Docker required.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content"><p>Install <strong>Python 3.10+</strong> from <a href="https://python.org">python.org</a> — check "Add to PATH" during install</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content"><p>Install <strong>Windows Terminal</strong> from the Microsoft Store for best Unicode and emoji support</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content"><p>Clone and install</p>
+        <pre><code>git clone https://github.com/dnysaz/xtc-client.git
+cd xtc-client
+pip install -r requirements.txt</code></pre></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content"><p>Run the client</p>
+        <pre><code>python xtc.py</code></pre>
+        <p style="font-size:12px;margin-top:6px">Optional: create an alias or add to PATH for the <code>xtc</code> shortcut.</p></div>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">ℹ️</div>
+      <p>Configuration is saved to <code>~/.xtc_config.json</code>. You can edit it manually or use <code>xtc connect</code> and <code>xtc disconnect</code> to manage it.</p>
+    </div>
+  </section>
+
+  <!-- 06 FIRST TIME USE -->
+  <section class="section" id="first-use">
+    <h2><span class="h-num">06</span> First time use</h2>
+    <p>Once your server is running and client is installed, here's the typical flow:</p>
+
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">bash</span></div>
+      <div class="terminal-body"><span class="t-dim"># Step 1 — connect to your server</span>
+<span class="t-prompt">$</span> <span class="t-cmd">xtc connect @103.45.67.89:8080</span>
+<span class="t-green">[*] Configuration saved</span>
+<span class="t-green">[*] Linked to gateway: http://103.45.67.89:8080</span>
+
+<span class="t-dim"># Step 2 — verify connection</span>
+<span class="t-prompt">$</span> <span class="t-cmd">xtc status</span>
+<span class="t-out"> GATEWAY :  http://103.45.67.89:8080
+ SERVICE :  XtermChat Gateway v1.1
+ STATUS  :  ONLINE (HTTP 200)
+ LATENCY :  42 ms</span>
+
+<span class="t-dim"># Step 3 — create a room</span>
+<span class="t-prompt">$</span> <span class="t-cmd">xtc create:room @general</span>
+<span class="t-green">[*] SUCCESS: Room '@general' is live (public 🌐)</span>
+
+<span class="t-dim"># Step 4 — start chatting</span>
+<span class="t-prompt">$</span> <span class="t-cmd">xtc start:chat @general</span></div>
+    </div>
+  </section>
+
+  <!-- 07 CLI COMMANDS -->
+  <section class="section" id="cli-commands">
+    <h2><span class="h-num">07</span> CLI commands</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Command</th><th>Args</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>xtc connect</code></td><td><code>@IP:PORT</code></td><td>Save server address to local config</td></tr>
+          <tr><td><code>xtc disconnect</code></td><td><code>@IP:PORT</code></td><td>Remove saved server config</td></tr>
+          <tr><td><code>xtc status</code></td><td>—</td><td>Check server connection and latency</td></tr>
+          <tr><td><code>xtc list:rooms</code></td><td>—</td><td>List all rooms on the server</td></tr>
+          <tr><td><code>xtc create:room</code></td><td><code>@name [password]</code></td><td>Create a room. No args = interactive mode</td></tr>
+          <tr><td><code>xtc delete:room</code></td><td><code>@name</code></td><td>Permanently delete a room (creator only)</td></tr>
+          <tr><td><code>xtc start:chat</code></td><td><code>@name</code></td><td>Open the interactive chat TUI</td></tr>
+          <tr><td><code>xtc start:web</code></td><td>—</td><td>Start local web server at <code>:5000</code></td></tr>
+          <tr><td><code>xtc help</code></td><td>—</td><td>Show help menu</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Examples</h3>
+    <pre><code># Connect to server
+xtc connect @103.45.67.89:8080
+
+# Create a private room with password
+xtc create:room @devteam mypassword
+
+# Interactive room creation (prompts for name, password, description)
+xtc create:room
+
+# Join a private room (password prompted automatically)
+xtc start:chat @devteam
+
+# List all rooms
+xtc list:rooms</code></pre>
+  </section>
+
+  <!-- 08 CHAT INTERFACE -->
+  <section class="section" id="chat-interface">
+    <h2><span class="h-num">08</span> Chat interface</h2>
+    <p>Running <code>xtc start:chat</code> opens a full terminal UI with three panels and a dual-focus mode system.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">chat UI layout</span></div>
+      <div class="terminal-body"><span class="t-blue">  XtermChat-CLI  |  NODE: mac-dana  |  103.45.67.89  |  [ INPUT ]</span>
+<span class="t-dim">┌──────────────────┬──────────────────────────────────┬─────────────────┐
+│</span> <span class="t-cmd">ID</span>               <span class="t-dim">│</span>                                  <span class="t-dim">│</span> <span class="t-cmd">CHANNEL</span>         <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-blue">KETUT</span>           <span class="t-dim">│  </span><span class="t-out">now</span>  <span class="t-blue">You  </span><span class="t-dim">❯</span>  <span class="t-cmd">hello everyone  </span>  <span class="t-dim">│</span>  <span class="t-blue">#GENERAL</span>       <span class="t-dim">│</span>
+<span class="t-dim">│</span>                  <span class="t-dim">│  </span><span class="t-out">2m</span>   <span class="t-cmd">AGUNG</span><span class="t-dim">❯</span>  hey!              <span class="t-dim">│</span>                 <span class="t-dim">│</span>
+<span class="t-dim">│</span> <span class="t-cmd">GATEWAY</span>          <span class="t-dim">│  </span><span class="t-out">5m</span>   <span class="t-blue">You  </span><span class="t-dim">❯</span>  <span class="t-blue">https://x.com</span>     <span class="t-dim">│</span> <span class="t-cmd">CREATOR</span>         <span class="t-dim">│</span>
+<span class="t-dim">│</span>  103.45.67.89    <span class="t-dim">│</span>                                  <span class="t-dim">│</span>  KETUT          <span class="t-dim">│</span>
+<span class="t-dim">│</span>                  <span class="t-dim">│</span>                                  <span class="t-dim">│</span>                 <span class="t-dim">│</span>
+<span class="t-dim">│</span> <span class="t-cmd">AUTH</span>             <span class="t-dim">│</span>                                  <span class="t-dim">│</span> <span class="t-cmd">CREATED</span>         <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-green">LOCKED</span>          <span class="t-dim">│</span>                                  <span class="t-dim">│</span>  14 Mar 2026    <span class="t-dim">│</span>
+<span class="t-dim">└──────────────────┴──────────────────────────────────┴─────────────────┘</span>
+<span class="t-out"> ✏️  INPUT MODE  │  ENTER: SEND  │  TAB: → CHAT  │  Ctrl+X: EXIT</span>
+<span class="t-dim"> Message ❯❯❯ </span><span class="t-cmd">_</span></div>
+    </div>
+
+    <h3>Focus modes</h3>
+    <p>Press <kbd>Tab</kbd> to switch between the two modes:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>✏️ INPUT MODE (default)</h4>
+        <p>Cursor is in the message box. Type and send messages. All command shortcuts active (<code>:clear</code>, <code>:purge</code>, <code>:e</code>).</p>
+      </div>
+      <div class="card">
+        <h4>📋 CHAT MODE</h4>
+        <p>Cursor moves into chat history. Scroll, select text, copy messages, and open links. Auto-scroll pauses while here.</p>
+      </div>
+    </div>
+
+    <h3>Keyboard shortcuts</h3>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:6px">Global</p>
+    <div class="shortcuts">
+      <span class="key"><kbd>Tab</kbd></span><span class="desc">Switch INPUT ↔ CHAT mode</span>
+      <span class="key"><kbd>Escape</kbd></span><span class="desc">Return to INPUT mode / close emoji panel</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>X</kbd></span><span class="desc">Exit chat</span>
+      <span class="key"><kbd>PageUp</kbd></span><span class="desc">Scroll chat up 12 lines</span>
+      <span class="key"><kbd>PageDown</kbd></span><span class="desc">Scroll chat down 12 lines</span>
+    </div>
+
+    <p style="font-size:13px;color:var(--muted);margin:14px 0 6px">INPUT MODE</p>
+    <div class="shortcuts">
+      <span class="key"><kbd>Enter</kbd></span><span class="desc">Send message</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>C</kbd></span><span class="desc">Exit chat</span>
+      <span class="key"><code>:clear</code></span><span class="desc">Clear local chat display (no server effect)</span>
+      <span class="key"><code>:purge</code></span><span class="desc">Delete all messages from server (creator only)</span>
+      <span class="key"><code>:e</code></span><span class="desc">Toggle emoji shortcuts panel</span>
+      <span class="key"><code>:q</code></span><span class="desc">Quit chat</span>
+    </div>
+
+    <p style="font-size:13px;color:var(--muted);margin:14px 0 6px">CHAT MODE (after pressing Tab)</p>
+    <div class="shortcuts">
+      <span class="key"><kbd>↑</kbd> <kbd>↓</kbd></span><span class="desc">Scroll line by line</span>
+      <span class="key"><kbd>Home</kbd></span><span class="desc">Jump to top of chat</span>
+      <span class="key"><kbd>End</kbd></span><span class="desc">Jump to bottom, resume auto-scroll</span>
+      <div class="divider"></div>
+      <span class="key"><kbd>Shift</kbd>+<kbd>←</kbd><kbd>→</kbd></span><span class="desc">Select character by character</span>
+      <span class="key"><kbd>Shift</kbd>+<kbd>↑</kbd><kbd>↓</kbd></span><span class="desc">Select line by line</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>→</kbd></span><span class="desc">Select next word</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd></span><span class="desc">Select previous word</span>
+      <div class="divider"></div>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>C</kbd></span><span class="desc">Copy selected text to clipboard</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>L</kbd></span><span class="desc">Open link at cursor position in browser</span>
+    </div>
+  </section>
+
+  <!-- 09 WEB INTERFACE -->
+  <section class="section" id="web-interface">
+    <h2><span class="h-num">09</span> Web interface</h2>
+    <p>XtermChat includes a browser-based UI for users who don't want to use the terminal. Start it with:</p>
+    <pre><code>xtc start:web
+# [*] Starting web interface...
+# URL: http://localhost:5000</code></pre>
+
+    <p>Open <code>http://localhost:5000</code> in your browser. You'll see a login page where you enter your server IP, port, username, and a 5-digit PIN.</p>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">ℹ️</div>
+      <p>The web PIN is a 5-digit number you choose yourself — unlike the CLI which uses your hardware UUID automatically. Both clients connect to the same server and share the same rooms and messages.</p>
+    </div>
+
+    <h3>Web vs CLI</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>CLI</th><th>Web</th></tr></thead>
+        <tbody>
+          <tr><td>PIN type</td><td>Hardware UUID (auto)</td><td>5-digit number (user-chosen)</td></tr>
+          <tr><td>Device-bound</td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-yellow">✗ No</span></td></tr>
+          <tr><td>Installation</td><td>Required</td><td>None (browser only)</td></tr>
+          <tr><td>Mobile support</td><td><span class="badge badge-red">✗ No</span></td><td><span class="badge badge-green">✓ Yes</span></td></tr>
+          <tr><td>Tab/focus modes</td><td><span class="badge badge-green">✓ Yes</span></td><td><span class="badge badge-red">✗ No</span></td></tr>
+          <tr><td>Copy from chat</td><td>Ctrl+C in CHAT MODE</td><td>Normal browser select</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 10 ROOM MANAGEMENT -->
+  <section class="section" id="rooms">
+    <h2><span class="h-num">10</span> Room management</h2>
+
+    <h3>Public vs private rooms</h3>
+    <pre><code># Public room — anyone on the server can join
+xtc create:room @general
+
+# Private room — password required to join
+xtc create:room @team secretpassword
+
+# Interactive mode — prompts for everything
+xtc create:room</code></pre>
+
+    <p>Private rooms appear in <code>xtc list:rooms</code> with a <strong>LOCKED</strong> label. Passwords are stored as bcrypt hashes — the raw password is never saved.</p>
+
+    <h3>Creator privileges</h3>
+    <p>When you create a room, your hardware UUID is recorded as <code>creator_pin</code>. Only you (from the same machine) can:</p>
+    <ul style="color:#94a3b8;font-size:13.5px;padding-left:20px;line-height:2">
+      <li>Delete the room: <code>xtc delete:room @roomname</code></li>
+      <li>Purge all messages: type <code>:purge</code> inside the chat</li>
+    </ul>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">⚠️</div>
+      <p><code>:purge</code> deletes all messages permanently from the server. The room itself remains. This action cannot be undone.</p>
+    </div>
+  </section>
+
+  <!-- 11 EMOJI -->
+  <section class="section" id="emoji">
+    <h2><span class="h-num">11</span> Emoji shortcuts</h2>
+    <p>Type any shortcut in a message and it auto-converts when you press Enter. Type <code>:e</code> to open the reference panel inside the chat.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Shortcut</th><th>Emoji</th><th>Shortcut</th><th>Emoji</th><th>Shortcut</th><th>Emoji</th></tr></thead>
+        <tbody>
+          <tr><td><code>:fire</code></td><td>🔥</td><td><code>:check</code></td><td>✅</td><td><code>:robot</code></td><td>🤖</td></tr>
+          <tr><td><code>:rocket</code></td><td>🚀</td><td><code>:warn</code></td><td>⚠️</td><td><code>:bug</code></td><td>🪲</td></tr>
+          <tr><td><code>:nice</code></td><td>👍</td><td><code>:heart</code></td><td>❤️</td><td><code>:coffee</code></td><td>☕</td></tr>
+          <tr><td><code>:cool</code></td><td>😎</td><td><code>:star</code></td><td>⭐</td><td><code>:beer</code></td><td>🍺</td></tr>
+          <tr><td><code>:laugh</code></td><td>😂</td><td><code>:ghost</code></td><td>👻</td><td><code>:globe</code></td><td>🌐</td></tr>
+          <tr><td><code>:smile</code></td><td>😊</td><td><code>:party</code></td><td>🎉</td><td><code>:key</code></td><td>🔑</td></tr>
+          <tr><td><code>:cry</code></td><td>😢</td><td><code>:eyes</code></td><td>👀</td><td><code>:box</code></td><td>📦</td></tr>
+          <tr><td><code>:pray</code></td><td>🙏</td><td><code>:100</code></td><td>💯</td><td><code>:link</code></td><td>🔗</td></tr>
+          <tr><td><code>:muscle</code></td><td>💪</td><td><code>:zap</code></td><td>⚡</td><td><code>:skull</code></td><td>💀</td></tr>
+          <tr><td><code>:lock</code></td><td>🔒</td><td><code>:cloud</code></td><td>☁️</td><td><code>:top</code></td><td>🔝</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 12 IDENTITY -->
+  <section class="section" id="identity">
+    <h2><span class="h-num">12</span> Identity &amp; security</h2>
+
+    <h3>How CLI identity works</h3>
+    <p>Your identity is determined by two things: your system username (<code>whoami</code>, max 5 chars, uppercased) and your hardware PIN (machine UUID). The first time you send a message, the server registers this combination. Future messages from a different machine are rejected.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">identity flow</span></div>
+      <div class="terminal-body"><span class="t-out">machine UUID (IOPlatformUUID / /etc/machine-id)</span>
+         <span class="t-dim">↓</span>
+<span class="t-out">      CLI_PIN  (hardware-bound, auto)</span>
+         <span class="t-dim">↓</span>
+<span class="t-out">sent with every message + room operation</span>
+         <span class="t-dim">↓</span>
+<span class="t-out">server: users table  →  username:PIN mapping</span>
+         <span class="t-dim">↓</span>
+<span class="t-out">mismatch → 403  Identity mismatch. Wrong PIN.</span></div>
+    </div>
+
+    <h3>What the server validates</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Action</th><th>Validation</th></tr></thead>
+        <tbody>
+          <tr><td>Send message</td><td>Username + PIN must match registered record</td></tr>
+          <tr><td>Create room</td><td>PIN stored as <code>creator_pin</code></td></tr>
+          <tr><td>Purge messages</td><td>Requester PIN must match <code>creator_pin</code></td></tr>
+          <tr><td>Delete room</td><td>Username + PIN must match creator</td></tr>
+          <tr><td>Join private room</td><td>Room password (verified via bcrypt)</td></tr>
+          <tr><td>Web login</td><td>Username + PIN must match registered record</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Network security</h3>
+    <p>Default setup uses <strong>HTTP</strong>, which is fine for private/internal networks. For public-facing deployments, use HTTPS — see the next section. No client code changes are needed to switch.</p>
+  </section>
+
+  <!-- 13 HTTPS -->
+  <section class="section" id="https">
+    <h2><span class="h-num">13</span> HTTPS setup</h2>
+    <p>No client code changes needed. Just point your client at an <code>https://</code> URL after setup.</p>
+
+    <h3>Option A — Caddy (recommended)</h3>
+    <p>Caddy automatically obtains and renews SSL certificates from Let's Encrypt.</p>
+    <pre><code># Install Caddy
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' \
+  | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' \
+  | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+sudo apt update && sudo apt install caddy -y
+
+# Edit Caddyfile
+sudo nano /etc/caddy/Caddyfile</code></pre>
+    <pre><code>yourdomain.com {
+    reverse_proxy localhost:8080
+}</code></pre>
+    <pre><code>sudo systemctl reload caddy</code></pre>
+
+    <h3>Option B — Nginx + Let's Encrypt</h3>
+    <pre><code>sudo apt install nginx certbot python3-certbot-nginx -y
+sudo certbot --nginx -d yourdomain.com</code></pre>
+    <pre><code>server {
+    listen 443 ssl;
+    server_name yourdomain.com;
+    ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</code></pre>
+
+    <p>After setup, update your client:</p>
+    <pre><code>xtc connect @yourdomain.com</code></pre>
+  </section>
+
+  <!-- 14 SERVER MANAGEMENT -->
+  <section class="section" id="server-mgmt">
+    <h2><span class="h-num">14</span> Server management</h2>
+
+    <h3>Start / stop</h3>
+    <pre><code>python3 server.py start    # start in background
+python3 server.py stop     # stop
+python3 server.py          # run in foreground (for debugging)</code></pre>
+
+    <h3>Check status</h3>
+    <pre><code>cat server.pid
+ps aux | grep server.py
+curl http://localhost:8080</code></pre>
+
+    <h3>View logs</h3>
+    <pre><code>tail -f server.log
+grep "ERROR\|Exception" server.log</code></pre>
+
+    <h3>systemd service (auto-restart on reboot)</h3>
+    <pre><code>sudo nano /etc/systemd/system/xtermchat.service</code></pre>
+    <pre><code>[Unit]
+Description=XtermChat Server
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/xtc-server
+ExecStart=/usr/bin/python3 /home/ubuntu/xtc-server/server.py run_internal
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/ubuntu/xtc-server/server.log
+StandardError=append:/home/ubuntu/xtc-server/server.log
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+    <pre><code>sudo systemctl daemon-reload
+sudo systemctl enable xtermchat
+sudo systemctl start xtermchat
+sudo systemctl status xtermchat</code></pre>
+
+    <h3>Update</h3>
+    <pre><code>cd xtc-server
+python3 server.py stop
+git pull
+python3 server.py start</code></pre>
+
+    <h3>Backup</h3>
+    <pre><code># The entire server state is one file
+cp xtc.db xtc_backup_$(date +%Y%m%d_%H%M).db</code></pre>
+  </section>
+
+  <!-- 15 DATABASE -->
+  <section class="section" id="database">
+    <h2><span class="h-num">15</span> Database</h2>
+    <p>Everything is stored in <code>xtc.db</code> — a single SQLite file that's auto-created on first run.</p>
+
+    <h3>Schema</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Table</th><th>Columns</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>users</code></td><td><code>username</code> (PK), <code>pin</code></td><td>Identity registry</td></tr>
+          <tr><td><code>rooms</code></td><td><code>name</code> (UNIQUE), <code>creator</code>, <code>password</code>, <code>description</code>, <code>created_at</code>, <code>creator_pin</code></td><td>Room config and ownership</td></tr>
+          <tr><td><code>messages</code></td><td><code>id</code> (AI), <code>room</code>, <code>sender</code>, <code>pin</code>, <code>content</code>, <code>timestamp</code></td><td>Message history</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Inspect with check_db.py</h3>
+    <pre><code>python3 check_db.py</code></pre>
+    <p>Opens an interactive menu to browse rooms, users, and messages with a formatted table view.</p>
+
+    <h3>Direct SQLite access</h3>
+    <pre><code>sqlite3 xtc.db
+
+.tables
+SELECT * FROM rooms;
+SELECT COUNT(*) FROM messages WHERE room='general';
+SELECT * FROM messages ORDER BY id DESC LIMIT 20;
+.quit</code></pre>
+
+    <h3>Full reset</h3>
+    <pre><code>python3 server.py stop
+rm xtc.db
+python3 server.py start   # fresh database created automatically</code></pre>
+  </section>
+
+  <!-- 16 API -->
+  <section class="section" id="api">
+    <h2><span class="h-num">16</span> API reference</h2>
+    <p>Base URL: <code>http://YOUR_SERVER:8080</code> — all endpoints return JSON.</p>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-get">GET</span><span class="api-path">/</span><span class="api-desc">Health check</span></div>
+      <div class="api-body"><pre><code>// Response 200
+{"status": "online", "service": "XtermChat Gateway", "version": "1.1"}</code></pre></div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-post">POST</span><span class="api-path">/login</span><span class="api-desc">Register or verify identity</span></div>
+      <div class="api-body">
+        <pre><code>// Request
+{"user": "ketut", "pin": "12345"}
+
+// 200 — existing user, PIN matches
+{"status": "success", "message": "Welcome back"}
+
+// 201 — new user registered
+{"status": "success", "message": "New identity registered"}
+
+// 403 — PIN mismatch
+{"status": "failed", "message": "Identity locked to another device/PIN."}</code></pre>
+      </div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-get">GET</span><span class="api-path">/rooms</span><span class="api-desc">List all rooms</span></div>
+      <div class="api-body">
+        <pre><code>// Response 200
+{"status": "success", "count": 2, "rooms": [
+  {"name": "general", "has_password": false, "creator": "KETUT",
+   "description": "General chat", "created_at": 1741234567}
+]}</code></pre>
+      </div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-post">POST</span><span class="api-path">/create-room</span><span class="api-desc">Create a room</span></div>
+      <div class="api-body">
+        <pre><code>// Request
+{"room": "general", "user": "ketut", "password": "",
+ "description": "General chat", "created_at": 1741234567, "pin": "UUID"}
+
+// 201
+{"status": "success", "message": "Room @general created."}
+// 400 — already exists
+{"status": "failed", "message": "Room already exists or invalid data."}</code></pre>
+      </div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-post">POST</span><span class="api-path">/verify-room</span><span class="api-desc">Check room and password</span></div>
+      <div class="api-body">
+        <pre><code>// Request
+{"room": "general", "password": ""}
+// 200 → ok | 404 → not found | 403 → wrong password</code></pre>
+      </div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-post">POST</span><span class="api-path">/send</span><span class="api-desc">Send a message</span></div>
+      <div class="api-body">
+        <pre><code>// Request
+{"room": "general", "password": "", "user": "KETUT",
+ "content": "Hello world", "pin": "UUID"}
+// 201 → ok | 403 → PIN mismatch | 400 → empty or too long</code></pre>
+      </div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-get">GET</span><span class="api-path">/messages/&lt;room&gt;</span><span class="api-desc">Get messages</span></div>
+      <div class="api-body">
+        <pre><code>GET /messages/general?password=
+
+// Response 200
+[{"sender": "KETUT", "content": "Hello", "pin": "UUID",
+  "timestamp": "2026-03-14 08:30:00"}]
+// 401 → password required</code></pre>
+      </div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-post">POST</span><span class="api-path">/purge-chat</span><span class="api-desc">Delete all messages (creator only)</span></div>
+      <div class="api-body">
+        <pre><code>// Request
+{"room": "general", "user": "ketut", "pin": "UUID"}
+// 200 → ok | 403 → Hardware ID mismatch</code></pre>
+      </div>
+    </div>
+
+    <div class="api-block">
+      <div class="api-head"><span class="method method-post">POST</span><span class="api-path">/delete-room</span><span class="api-desc">Delete room permanently (creator only)</span></div>
+      <div class="api-body">
+        <pre><code>// Request
+{"room": "general", "user": "ketut", "pin": "UUID"}
+// 200 → ok | 403 → Unauthorized: Hardware ID mismatch</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 TROUBLESHOOTING -->
+  <section class="section" id="troubleshooting">
+    <h2><span class="h-num">17</span> Troubleshooting</h2>
+
+    <h3>Connection refused</h3>
+    <pre><code>curl http://YOUR_IP:8080           # test direct access
+sudo ufw status                    # check firewall
+cat server.pid                     # check if server is running
+ps aux | grep server.py</code></pre>
+
+    <h3>Identity locked to another device</h3>
+    <p>Your username is registered from a different machine. Options:</p>
+    <pre><code># Option 1 — use a different username (change system user)
+# Option 2 — admin removes the old entry
+sqlite3 xtc.db "DELETE FROM users WHERE username='yourname';"</code></pre>
+
+    <h3>Access denied on purge or delete</h3>
+    <p>You must be on the same machine that created the room. Hardware PIN is device-specific.</p>
+
+    <h3>Server won't start — port in use</h3>
+    <pre><code>sudo lsof -i :8080
+sudo kill -9 &lt;PID&gt;
+rm server.pid
+python3 server.py start</code></pre>
+
+    <h3>Copy not working (Linux)</h3>
+    <pre><code>sudo apt install xclip
+# or
+sudo apt install xsel</code></pre>
+
+    <h3>Chat scroll not working</h3>
+    <p>Make sure your terminal is at least 80×24 characters. Press <kbd>Tab</kbd> to enter CHAT MODE, then use arrow keys or PageUp/PageDown.</p>
+
+    <h3>Server crashed / not responding</h3>
+    <pre><code>tail -50 server.log
+rm server.pid
+python3 server.py start</code></pre>
+  </section>
+
+  <!-- 18 FAQ -->
+  <section class="section" id="faq">
+    <h2><span class="h-num">18</span> FAQ</h2>
+
+    <h3>Can multiple people be in the same room at the same time?</h3>
+    <p>Yes. Messages are polled every 2 seconds. All connected users see new messages automatically.</p>
+
+    <h3>Are messages stored permanently?</h3>
+    <p>Until the room creator runs <code>:purge</code> (wipes messages, keeps room) or <code>xtc delete:room</code> (removes everything). You can also delete <code>xtc.db</code> on the server to reset completely.</p>
+
+    <h3>Can I run the server and client on the same machine?</h3>
+    <pre><code>xtc connect @localhost:8080</code></pre>
+
+    <h3>What if I reinstall my OS or switch machines?</h3>
+    <p>Your hardware PIN changes. The old username is locked to the old device. A server admin can reset it:</p>
+    <pre><code>sqlite3 xtc.db "DELETE FROM users WHERE username='yourname';"</code></pre>
+
+    <h3>Can web and CLI users chat together?</h3>
+    <p>Yes. Both clients use the same API and see each other's messages in the same rooms in real time.</p>
+
+    <h3>How many users can XtermChat handle?</h3>
+    <p>SQLite handles millions of rows comfortably. For a team of 2–50 people with normal usage, performance is fine on even the cheapest VPS. For very high traffic you'd want to migrate to PostgreSQL, which requires modifying <code>db.py</code>.</p>
+
+    <h3>How do I update?</h3>
+    <pre><code># Server
+cd xtc-server && python3 server.py stop && git pull && python3 server.py start
+
+# Client
+cd xtc-client && git pull && make install</code></pre>
+    <p>Your database and config are preserved through updates.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="padding:40px 0 60px;border-top:1px solid var(--border);margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--muted)">XtermChat v1.0.0</div>
+      <div style="font-size:11px;color:var(--dim);margin-top:4px">MIT License · March 2026</div>
+    </div>
+    <div style="display:flex;gap:20px">
+      <a href="https://github.com/dnysaz/xtc-server" style="font-family:var(--mono);font-size:11px;color:var(--muted)">xtc-server ↗</a>
+      <a href="https://github.com/dnysaz/xtc-client" style="font-family:var(--mono);font-size:11px;color:var(--muted)">xtc-client ↗</a>
+    </div>
+  </footer>
+
+</main>
 </div>
 
-<!-- scrollspy -->
 <script>
-    (function() {
-        const tocLinks = document.querySelectorAll('.toc-link');
-        const sections = document.querySelectorAll('.anchor');
-        function setActive() {
-            let current = "";
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 120) {
-                    current = section.getAttribute('id');
-                }
-            });
-            tocLinks.forEach(link => {
-                link.classList.remove('active-toc');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active-toc');
-                }
-            });
-        }
-        window.addEventListener('scroll', setActive);
-        setActive();
-    })();
-</script>
+// Scrollspy
+const links   = document.querySelectorAll('.nav-link');
+const anchors = document.querySelectorAll('.section');
 
+function updateActive() {
+  let current = '';
+  anchors.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateActive, { passive: true });
+updateActive();
+
+// Mobile sidebar
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  if (sb.classList.contains('open') && !sb.contains(e.target) && !e.target.closest('.mobile-menu-btn')) {
+    sb.classList.remove('open');
+  }
+});
+</script>
 </body>
 </html>
