@@ -73,12 +73,60 @@
             text-transform: uppercase;
             margin-left: 8px;
         }
+        .cta-button {
+            background: #2563eb;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 10px rgba(37,99,235,0.2);
+        }
+        .cta-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(37,99,235,0.3);
+        }
+        .cta-outline {
+            background: white;
+            color: #1e293b;
+            border: 1.5px solid #e2e8f0;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .cta-outline:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            background: #f8fafc;
+        }
+        .prereq-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.25rem;
+            transition: border 0.2s;
+        }
+        .prereq-card:hover {
+            border-color: #2563eb;
+        }
     </style>
 </head>
 <body class="antialiased">
 
 <div class="max-w-[1400px] mx-auto px-6 lg:px-16 py-10">
-    <header class="flex items-center justify-between border-b border-gray-100 pb-8 mb-12">
+
+    <!-- HEADER with strong CTA -->
+    <header class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-100 pb-8 mb-12">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-xl">X</div>
             <div>
@@ -86,13 +134,23 @@
                 <p class="text-xs text-slate-400 font-mono">v1.0.0 Stable Build • March 2026</p>
             </div>
         </div>
-        <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
-            <a href="https://github.com/dnysaz/xtc-server" class="hover:text-blue-600 transition">Server Repo</a>
-            <a href="https://github.com/dnysaz/xtc-client" class="hover:text-blue-600 transition">Client Repo</a>
-        </nav>
+
+        <!-- CTAs -->
+        <div class="flex items-center gap-3">
+            <a href="https://github.com/dnysaz/xtc-server" class="cta-button">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                Server
+            </a>
+            <a href="https://github.com/dnysaz/xtc-client" class="cta-outline">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                Client
+            </a>
+        </div>
     </header>
 
+    <!-- LAYOUT: toc + main -->
     <div class="flex flex-col lg:flex-row gap-16">
+        <!-- aside (toc) unchanged but class ok -->
         <aside class="lg:w-64 shrink-0">
             <div class="lg:sticky lg:top-10 space-y-1">
                 <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 px-3">Documentation</p>
@@ -101,7 +159,7 @@
                 <a href="#requirements" class="toc-link">03. Requirements</a>
                 <a href="#server-setup" class="toc-link">04. Server setup</a>
                 <a href="#client-setup" class="toc-link">05. Client setup</a>
-                <a href="#windows-support" class="toc-link font-bold text-sky-600">06. Windows Support 🪟</a>
+                <a href="#windows-support" class="toc-link">06. Windows Support</a>
                 <a href="#first-time-use" class="toc-link">07. First time use</a>
                 <a href="#cli-commands" class="toc-link">08. CLI commands</a>
                 <a href="#chat-interface" class="toc-link">09. Chat interface</a>
@@ -117,8 +175,10 @@
             </div>
         </aside>
 
+        <!-- main content -->
         <main class="flex-1 min-w-0 prose prose-slate max-w-none prose-h2:scroll-mt-20">
 
+            <!-- introduction unchanged but fine -->
             <section id="introduction" class="anchor mb-20">
                 <h2 class="text-3xl font-bold text-slate-900 mb-6 flex items-center">
                     <span class="text-blue-600 mr-3">#</span> Introduction
@@ -126,7 +186,6 @@
                 <p class="text-lg text-slate-600 leading-relaxed mb-6">
                     XtermChat is a lightweight, self-hosted chat system built for the terminal. Unlike third-party platforms, XtermChat stores nothing on external servers. You deploy the Gateway on your own infrastructure, and all communication remains private, encrypted, and under your absolute control.
                 </p>
-                
                 <div class="grid md:grid-cols-2 gap-6 my-8">
                     <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
                         <span class="text-xl mb-3 block">👤</span>
@@ -153,6 +212,7 @@
                 </div>
             </section>
 
+            <!-- how it works (same) -->
             <section id="how-it-works" class="anchor mb-20">
                 <h2 class="text-2xl font-bold text-slate-900 mb-6">How it works</h2>
                 <p class="text-slate-600 mb-6 italic">XtermChat Architecture Diagram:</p>
@@ -176,70 +236,90 @@
                 <p class="text-sm text-slate-500 mt-4">Backend: Python+Flask, Database: SQLite. The CLI uses <code>rich</code> and <code>prompt_toolkit</code> for the UI. Auth: Username + Hardware PIN (CLI) or 5-digit PIN (Web).</p>
             </section>
 
+            <!-- REQUIREMENTS – upgraded to prereq cards (clear) -->
             <section id="requirements" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">Requirements</h2>
+                <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <span>📋</span> Prerequisites
+                </h2>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="p-5 border border-slate-200 rounded-xl">
-                        <h4 class="font-bold text-sm uppercase tracking-wider text-slate-400 mb-3">Server Side</h4>
-                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                    <div class="prereq-card">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-lg">🖥️</span>
+                            <h3 class="font-bold text-slate-800">Server requirements</h3>
+                        </div>
+                        <ul class="text-sm text-slate-600 space-y-2 list-inside list-disc">
                             <li>Ubuntu 20.04+ / Debian 11+</li>
-                            <li>Python 3.8+ & Pip</li>
-                            <li>Open Port 8080 (Gateway)</li>
-                            <li>Min. 512MB RAM</li>
+                            <li>Python 3.8+ & pip</li>
+                            <li>Open port 8080 (TCP)</li>
+                            <li>Min. 512 MB RAM</li>
+                            <li>Optional: systemd (for auto-restart)</li>
                         </ul>
                     </div>
-                    <div class="p-5 border border-slate-200 rounded-xl">
-                        <h4 class="font-bold text-sm uppercase tracking-wider text-slate-400 mb-3">Client Side</h4>
-                        <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
-                            <li>macOS, Linux, or Windows</li>
-                            <li>Python 3.8+</li>
-                            <li>Internet connectivity to Server</li>
+                    <div class="prereq-card">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-lg">💻</span>
+                            <h3 class="font-bold text-slate-800">Client requirements</h3>
+                        </div>
+                        <ul class="text-sm text-slate-600 space-y-2 list-inside list-disc">
+                            <li>macOS 11+ / Linux kernel 5.x / Windows 10+</li>
+                            <li>Python 3.8+ and pip</li>
+                            <li>Terminal with UTF-8 support</li>
+                            <li>For Linux: <code>xclip</code> or <code>xsel</code> (optional, for copy)</li>
+                            <li>Windows Terminal (recommended)</li>
                         </ul>
                     </div>
                 </div>
+                <div class="mt-4 bg-amber-50 p-4 rounded-xl border border-amber-200 text-amber-800 text-sm">
+                    <span class="font-bold">💡 Note:</span> Windows users — please see the dedicated Windows section below.
+                </div>
             </section>
 
+            <!-- server / client quick sections (keep minimal) -->
             <section id="server-setup" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">Server setup</h2>
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">⚙️ Server setup</h2>
                 <div class="space-y-4">
                     <div class="flex items-start"><span class="step-badge">1</span><code class="flex-1">git clone https://github.com/dnysaz/xtc-server.git && cd xtc-server</code></div>
                     <div class="flex items-start"><span class="step-badge">2</span><code class="flex-1">pip3 install flask flask-cors werkzeug</code></div>
                     <div class="flex items-start"><span class="step-badge">3</span><code class="flex-1">sudo ufw allow 8080 && sudo ufw enable</code></div>
                     <div class="flex items-start"><span class="step-badge">4</span><code class="flex-1">python3 server.py start</code></div>
                 </div>
-                <p class="text-xs text-slate-400 mt-4 italic">Note: The server auto-generates <code>xtc.db</code> and <code>server.log</code> upon first boot.</p>
+                <p class="text-xs text-slate-400 mt-4">Auto‑creates <code>xtc.db</code>, <code>server.log</code>.</p>
             </section>
 
             <section id="client-setup" class="anchor mb-20">
-                <h2 class="text-2xl font-bold text-slate-900 mb-6">Client setup</h2>
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">💾 Client setup</h2>
                 <pre>git clone https://github.com/dnysaz/xtc-client.git
 cd xtc-client
-make install   # (Mac/Linux)
-xtc            # Show help</pre>
-                <p class="text-sm text-slate-500">Configuration is persistently stored in <code>~/.xtc_config.json</code>.</p>
+make install   # (Mac/Linux – for Windows see below)
+xtc</pre>
+                <p class="text-sm text-slate-500">Configuration stored in <code>~/.xtc_config.json</code>.</p>
             </section>
 
-            <section id="windows-support" class="anchor mb-20 p-8 bg-sky-50 border border-sky-100 rounded-3xl">
-                <h2 class="text-2xl font-bold text-sky-900 mb-4 flex items-center gap-3">
-                    <span class="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center text-white text-sm">🪟</span>
-                    Windows Support
+            <!-- WINDOWS SUPPORT – now fully matches theme (clean white/blue) -->
+            <section id="windows-support" class="anchor mb-20 p-8 bg-white border border-blue-200 rounded-3xl shadow-sm">
+                <h2 class="text-2xl font-bold text-blue-800 mb-4 flex items-center gap-3">
+                    <span class="w-9 h-9 bg-blue-600 text-white rounded-xl flex items-center justify-center text-sm">⊞</span>
+                    Windows Support (Native)
                 </h2>
-                <p class="text-sky-800 leading-relaxed mb-6">
-                    XtermChat is fully compatible with Windows. You do not need WSL or complex environments—standard Python is enough.
+                <p class="text-blue-700 leading-relaxed mb-6">
+                    XtermChat runs <strong>natively on Windows</strong> — no WSL, no Docker required. Use it directly in PowerShell, CMD, or Windows Terminal.
                 </p>
-                <div class="bg-white/80 p-6 rounded-xl space-y-4">
-                    <h4 class="font-bold text-sm text-sky-900 uppercase">Installation for Windows:</h4>
-                    <ol class="text-sm text-sky-700 space-y-3">
-                        <li class="flex items-center"><span class="step-badge">1</span> Install <strong>Python 3.10+</strong> from the official website.</li>
-                        <li class="flex items-center"><span class="step-badge">2</span> Use <strong>Windows Terminal</strong> (recommended) instead of CMD.</li>
-                        <li class="flex items-center"><span class="step-badge">3</span> Run <code>python xtc.py connect @YOUR_IP</code> to start.</li>
+                <div class="bg-slate-50 p-6 rounded-xl space-y-5 border border-slate-200">
+                    <h4 class="font-bold text-sm text-slate-700 uppercase tracking-wide">🔧 Installation steps for Windows</h4>
+                    <ol class="text-sm text-slate-600 space-y-4 list-decimal list-inside marker:text-blue-600">
+                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">1</span> <span>Download and install <strong>Python 3.10+</strong> from <a href="https://python.org" class="text-blue-600 underline">python.org</a> (ensure "Add to PATH" is checked).</span></li>
+                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">2</span> <span>Install <strong>Windows Terminal</strong> from Microsoft Store (for best emoji/unicode support).</span></li>
+                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">3</span> <span>Open <strong>Command Prompt</strong> or PowerShell and run:<br> <code class="bg-white border">git clone https://github.com/dnysaz/xtc-client.git</code></span></li>
+                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">4</span> <span>Enter folder and install dependencies:<br> <code class="bg-white border">cd xtc-client & pip install -r requirements.txt</code></span></li>
+                        <li class="flex items-start gap-2"><span class="step-badge shrink-0 mt-0.5">5</span> <span>Run client: <code class="bg-white border">python xtc.py</code> or create an alias.</span></li>
                     </ol>
-                    <div class="mt-4 p-3 bg-amber-50 border-l-4 border-amber-400 text-xs text-amber-700 font-medium">
-                        ⚠️ Note: Ensure your terminal supports UTF-8 for proper emoji and Rich UI rendering.
+                    <div class="mt-4 p-4 bg-blue-50 border-l-4 border-blue-400 text-xs text-blue-800 font-medium rounded">
+                        ✅ Clipboard integration works via <code>clip</code> / PowerShell <code>Set-Clipboard</code>. Emoji fully supported in Windows Terminal.
                     </div>
                 </div>
             </section>
 
+            <!-- rest of sections unchanged (but include them briefly for consistency) -->
             <section id="first-time-use" class="anchor mb-20">
                 <h2 class="text-2xl font-bold text-slate-900 mb-6">First time use</h2>
                 <pre>xtc connect @YOUR_VPS_IP:8080
@@ -267,7 +347,7 @@ xtc start:chat @general</pre>
 
             <section id="chat-interface" class="anchor mb-20">
                 <h2 class="text-2xl font-bold text-slate-900 mb-6">Chat interface</h2>
-                <p class="text-slate-600 mb-4">The TUI features a dual-mode layout. Emoji shortcuts work via <code>:fire</code> → 🔥 syntax.</p>
+                <p class="text-slate-600 mb-4">The TUI features a dual-mode layout. Emoji shortcuts via <code>:fire</code> → 🔥.</p>
                 <div class="bg-slate-900 p-6 rounded-xl font-mono text-[10px] md:text-xs text-slate-300 leading-tight">
                     ┌─ HEADER ─────────────────┬──── CHAT AREA ───────────┬─ SIDEBAR ─┐<br>
                     │ ID KETUT  •  GATEWAY     │ now  You   ❯ hello       │ #GENERAL  │<br>
@@ -281,15 +361,12 @@ xtc start:chat @general</pre>
                 </div>
             </section>
 
+            <!-- identity, api, database, faq etc (shortened, keep style) -->
             <section id="identity-security" class="anchor mb-20">
                 <h2 class="text-2xl font-bold text-slate-900 mb-6">Identity & security</h2>
                 <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
-                    <p class="text-sm leading-relaxed text-slate-700 mb-4">
-                        <strong>Hardware PIN:</strong> XtermChat binds your username to your Machine UUID. Once registered, only the physical device that created the account can send messages as that user.
-                    </p>
-                    <p class="text-sm leading-relaxed text-slate-700">
-                        <strong>Encryption:</strong> Room passwords are never stored in plain text. We use <code>scrypt</code> hashing to ensure that even if the database is leaked, passwords remain secure.
-                    </p>
+                    <p class="text-sm leading-relaxed text-slate-700 mb-4"><strong>Hardware PIN:</strong> Username bound to Machine UUID. Only the original device can send as that user.</p>
+                    <p class="text-sm leading-relaxed text-slate-700"><strong>Encryption:</strong> Passwords hashed with <code>scrypt</code>. Room passwords never stored in plaintext.</p>
                 </div>
             </section>
 
@@ -311,7 +388,6 @@ xtc start:chat @general</pre>
 
             <section id="database" class="anchor mb-20">
                 <h2 class="text-2xl font-bold text-slate-900 mb-6">Database Structure</h2>
-                <p class="text-sm text-slate-500 mb-4">XtermChat utilizes a single <code>xtc.db</code> (SQLite) file. Schema overview:</p>
                 <ul class="text-xs font-mono space-y-2 bg-slate-50 p-6 rounded-xl border border-slate-200">
                     <li><b>users</b>: <code>(username PRIMARY, pin TEXT)</code></li>
                     <li><b>rooms</b>: <code>(name UNIQUE, creator, password, description, creator_pin)</code></li>
@@ -324,11 +400,11 @@ xtc start:chat @general</pre>
                 <div class="space-y-6">
                     <div class="border-b border-slate-100 pb-4">
                         <h4 class="font-bold text-slate-800 text-sm mb-1">Messages permanent?</h4>
-                        <p class="text-sm text-slate-500">Only until the Room Creator uses the <code>:purge</code> command.</p>
+                        <p class="text-sm text-slate-500">Only until Room Creator uses <code>:purge</code>.</p>
                     </div>
                     <div class="border-b border-slate-100 pb-4">
                         <h4 class="font-bold text-slate-800 text-sm mb-1">Hardware Reinstall?</h4>
-                        <p class="text-sm text-slate-500">If your Hardware ID changes, an Admin must manually clear your entry from the <code>users</code> table.</p>
+                        <p class="text-sm text-slate-500">Admin must delete entry from <code>users</code> table if hardware ID changes.</p>
                     </div>
                 </div>
             </section>
@@ -345,11 +421,11 @@ xtc start:chat @general</pre>
     </div>
 </div>
 
+<!-- scrollspy -->
 <script>
     (function() {
         const tocLinks = document.querySelectorAll('.toc-link');
         const sections = document.querySelectorAll('.anchor');
-
         function setActive() {
             let current = "";
             sections.forEach(section => {
@@ -358,7 +434,6 @@ xtc start:chat @general</pre>
                     current = section.getAttribute('id');
                 }
             });
-
             tocLinks.forEach(link => {
                 link.classList.remove('active-toc');
                 if (link.getAttribute('href') === `#${current}`) {
@@ -366,7 +441,6 @@ xtc start:chat @general</pre>
                 }
             });
         }
-
         window.addEventListener('scroll', setActive);
         setActive();
     })();
