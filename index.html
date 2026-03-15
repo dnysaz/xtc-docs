@@ -6,6 +6,7 @@
 <title>XtermChat — Documentation</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <script>
 tailwind.config = {
   theme: {
@@ -26,139 +27,10 @@ tailwind.config = {
   }
 }
 </script>
-<style>
-  /* Minimal custom CSS — only what Tailwind can't do */
-  ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: #0a0a0f; }
-  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-
-  html { background: #0a0a0f; }
-
-  /* nav active state */
-  .nav-link { border-left: 2px solid transparent; transition: all .15s; }
-  .nav-link:hover  { border-left-color: #334155; background: rgba(59,130,246,.08); color: #e2e8f0; }
-  .nav-link.active { border-left-color: #3b82f6; background: rgba(59,130,246,.08); color: #3b82f6; font-weight: 600; }
-
-  /* inline code */
-  :not(pre) > code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .8rem;
-    background: #1e1e2e;
-    color: #93c5fd;
-    padding: 2px 7px;
-    border-radius: 5px;
-    border: 1px solid #334155;
-  }
-
-  /* pre block */
-  pre {
-    background: #111118;
-    border: 1px solid #1e1e2e;
-    border-radius: 12px;
-    padding: 18px 20px;
-    overflow-x: auto;
-    margin: 14px 0;
-  }
-  pre code {
-    background: none !important;
-    border: none !important;
-    padding: 0 !important;
-    color: #cbd5e1;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .8rem;
-    line-height: 1.75;
-  }
-
-  /* terminal block */
-  .terminal-body {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .75rem;
-    line-height: 1.8;
-    color: #94a3b8;
-    white-space: pre;
-    overflow-x: auto;
-    padding: 16px 18px;
-  }
-  .t-prompt { color: #3b82f6; }
-  .t-cmd    { color: #e2e8f0; }
-  .t-out    { color: #64748b; }
-  .t-green  { color: #4ade80; }
-  .t-blue   { color: #93c5fd; }
-  .t-yellow { color: #fbbf24; }
-  .t-dim    { color: #334155; }
-
-  /* shortcuts grid */
-  .shortcuts {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 6px 20px;
-    align-items: center;
-  }
-  .shortcuts .key  { text-align: right; white-space: nowrap; }
-  .shortcuts .desc { color: #94a3b8; font-size: .85rem; }
-  .shortcuts .divider { grid-column: 1/-1; border-top: 1px solid #1e1e2e; margin: 3px 0; }
-
-  /* kbd */
-  kbd {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .7rem;
-    background: #111118;
-    border: 1px solid #334155;
-    border-bottom-width: 2px;
-    border-radius: 5px;
-    padding: 1px 6px;
-    color: #e2e8f0;
-    white-space: nowrap;
-  }
-
-  /* sidebar overlay */
-  #overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.6);
-    z-index: 40;
-    backdrop-filter: blur(2px);
-  }
-  #overlay.show { display: block; }
-
-  /* sidebar transition */
-  #sidebar {
-    transition: transform .25s cubic-bezier(.4,0,.2,1);
-  }
-
-  /* section scroll offset */
-  .section { scroll-margin-top: 32px; }
-
-  /* h2 border */
-  h2.sec-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #e2e8f0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #1e1e2e;
-    margin-bottom: 20px;
-  }
-
-  h3.sub-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .9rem;
-    font-weight: 600;
-    color: #e2e8f0;
-    margin: 22px 0 8px;
-  }
-
-  p.body-text { color: #94a3b8; margin-bottom: 12px; font-size: .925rem; }
-
-  strong { color: #e2e8f0; }
-</style>
 </head>
 <body class="bg-bg text-slate-200 font-sans antialiased">
 
-<!-- ═══ OVERLAY (mobile) ═══ -->
+<!-- ═══ OVERLAY ═══ -->
 <div id="overlay" onclick="closeSidebar()"></div>
 
 <!-- ═══ MOBILE TOPBAR ═══ -->
@@ -167,7 +39,7 @@ tailwind.config = {
     <div class="w-7 h-7 bg-blue rounded-lg flex items-center justify-center font-mono font-bold text-xs text-white">xtc</div>
     <span class="font-mono text-sm font-semibold text-slate-200">XtermChat</span>
   </div>
-  <button onclick="openSidebar()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors" aria-label="Open menu">
+  <button onclick="openSidebar()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
     </svg>
@@ -175,53 +47,49 @@ tailwind.config = {
 </header>
 
 <!-- ═══ SIDEBAR ═══ -->
-<nav id="sidebar" class="fixed top-0 left-0 h-full w-60 bg-surface border-r border-border z-50 flex flex-col overflow-y-auto
-  -translate-x-full lg:translate-x-0">
+<nav id="sidebar" class="fixed top-0 left-0 h-full w-60 bg-surface border-r border-border z-50 flex flex-col overflow-y-auto -translate-x-full lg:translate-x-0">
 
-  <!-- Brand -->
   <div class="px-5 py-6 border-b border-border shrink-0">
     <div class="w-9 h-9 bg-blue rounded-lg flex items-center justify-center font-mono font-bold text-sm text-white mb-3">xtc</div>
     <div class="font-mono font-semibold text-sm text-slate-200 tracking-wide">XtermChat</div>
     <div class="font-mono text-xs text-slate-500 mt-1">v1.0.0 · March 2026</div>
   </div>
-
-  <!-- Close button (mobile only) -->
   <button onclick="closeSidebar()" class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-white p-1">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
     </svg>
   </button>
 
-  <!-- Nav -->
   <div class="flex-1 py-4 overflow-y-auto">
+    <!-- Getting Started -->
     <div class="px-5 pt-1 pb-2 text-[9px] font-bold uppercase tracking-[.15em] text-dim font-mono">Getting Started</div>
-    <a href="#introduction"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">01</span> Introduction</a>
-    <a href="#how-it-works"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">02</span> How it works</a>
-    <a href="#requirements"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">03</span> Requirements</a>
-    <a href="#server-setup"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">04</span> Server setup</a>
-    <a href="#client-setup"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">05</span> Client setup</a>
-    <a href="#first-use"      class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">06</span> First time use</a>
-
+    <a href="#introduction"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">01</span> Introduction</a>
+    <a href="#how-it-works"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">02</span> How it works</a>
+    <a href="#requirements"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">03</span> Requirements</a>
+    <a href="#server-setup"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">04</span> Server setup</a>
+    <a href="#client-setup"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">05</span> Client setup</a>
+    <a href="#first-use"      class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">06</span> First time use</a>
+    <!-- Usage -->
     <div class="px-5 pt-4 pb-2 text-[9px] font-bold uppercase tracking-[.15em] text-dim font-mono">Usage</div>
-    <a href="#cli-commands"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">07</span> CLI commands</a>
-    <a href="#chat-interface" class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">08</span> Chat interface</a>
-    <a href="#web-interface"  class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">09</span> Web interface</a>
-    <a href="#rooms"          class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">10</span> Room management</a>
-    <a href="#emoji"          class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">11</span> Emoji shortcuts</a>
-
+    <a href="#cli-commands"   class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">07</span> CLI commands</a>
+    <a href="#chat-interface" class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">08</span> Chat interface</a>
+    <a href="#web-interface"  class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">09</span> Web admin</a>
+    <a href="#rooms"          class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">10</span> Room management</a>
+    <a href="#emoji"          class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">11</span> Emoji shortcuts</a>
+    <a href="#bots"           class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">12</span> Bot system</a>
+    <!-- Advanced -->
     <div class="px-5 pt-4 pb-2 text-[9px] font-bold uppercase tracking-[.15em] text-dim font-mono">Advanced</div>
-    <a href="#identity"       class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">12</span> Identity & security</a>
-    <a href="#https"          class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">13</span> HTTPS setup</a>
-    <a href="#server-mgmt"    class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">14</span> Server management</a>
-    <a href="#database"       class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">15</span> Database</a>
-    <a href="#api"            class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">16</span> API reference</a>
-
+    <a href="#identity"       class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">13</span> Identity & security</a>
+    <a href="#https"          class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">14</span> HTTPS setup</a>
+    <a href="#server-mgmt"    class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">15</span> Server management</a>
+    <a href="#database"       class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">16</span> Database</a>
+    <a href="#api"            class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">17</span> API reference</a>
+    <!-- Help -->
     <div class="px-5 pt-4 pb-2 text-[9px] font-bold uppercase tracking-[.15em] text-dim font-mono">Help</div>
-    <a href="#troubleshooting" class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">17</span> Troubleshooting</a>
-    <a href="#faq"             class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono no-underline" onclick="closeSidebar()"><span class="text-[9px] text-dim w-4">18</span> FAQ</a>
+    <a href="#troubleshooting" class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">18</span> Troubleshooting</a>
+    <a href="#faq"             class="nav-link flex items-center gap-2 px-5 py-1.5 text-xs text-slate-500 font-mono"><span class="text-[9px] text-dim w-4">19</span> FAQ</a>
   </div>
 
-  <!-- Footer links -->
   <div class="px-4 py-4 border-t border-border shrink-0 space-y-2">
     <a href="https://github.com/dnysaz/xtc-server" class="flex items-center gap-2 px-3 py-2 bg-border border border-dim rounded-lg text-slate-300 text-xs font-mono hover:border-blue hover:text-blue hover:bg-blue/5 transition-all no-underline">
       <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
@@ -234,521 +102,613 @@ tailwind.config = {
   </div>
 </nav>
 
-<!-- ═══ PAGE WRAPPER ═══ -->
+<!-- ═══ PAGE ═══ -->
 <div class="lg:pl-60">
-  <!-- Content centered with max-width -->
-  <div class="max-w-3xl mx-auto px-5 sm:px-8 pt-20 lg:pt-12 pb-20">
+<div class="max-w-3xl mx-auto px-5 sm:px-8 pt-20 lg:pt-12 pb-20">
 
-    <!-- ── HERO ── -->
-    <div class="mb-16 pb-12 border-b border-border">
-      <div class="inline-flex items-center gap-2 bg-blue/10 border border-blue/30 rounded-full px-3 py-1 text-xs font-mono text-blue mb-5">
-        <span class="w-1.5 h-1.5 rounded-full bg-blue"></span> v1.0.0 Stable
+  <!-- ── HERO ── -->
+  <div class="mb-16 pb-12 border-b border-border">
+    <div class="inline-flex items-center gap-2 bg-blue/10 border border-blue/30 rounded-full px-3 py-1 text-xs font-mono text-blue mb-5">
+      <span class="w-1.5 h-1.5 rounded-full bg-blue"></span> v1.0.0 Stable
+    </div>
+    <h1 class="font-mono font-bold text-3xl sm:text-4xl text-slate-100 leading-tight mb-3">
+      XtermChat<br><span class="text-blue">Documentation</span>
+    </h1>
+    <p class="text-slate-400 text-base max-w-lg mb-7">Self-hosted terminal chat with bot monitoring and web admin. Your server, your data, your rules.</p>
+    <div class="flex flex-wrap gap-3">
+      <a href="#server-setup" class="inline-flex items-center gap-2 bg-blue hover:bg-bluedim text-white font-mono font-semibold text-xs px-4 py-2.5 rounded-lg transition-all hover:-translate-y-0.5 no-underline">→ Quick Start</a>
+      <a href="https://github.com/dnysaz/xtc-server" class="inline-flex items-center gap-2 bg-transparent border border-border hover:border-dim text-slate-400 hover:text-slate-200 font-mono text-xs px-4 py-2.5 rounded-lg transition-all no-underline">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        xtc-server ↗
+      </a>
+      <a href="https://github.com/dnysaz/xtc-client" class="inline-flex items-center gap-2 bg-transparent border border-border hover:border-dim text-slate-400 hover:text-slate-200 font-mono text-xs px-4 py-2.5 rounded-lg transition-all no-underline">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        xtc-client ↗
+      </a>
+    </div>
+    <div class="flex flex-wrap gap-6 mt-8 pt-6 border-t border-border">
+      <div class="font-mono"><div class="text-xl font-bold text-blue">~5 min</div><div class="text-xs text-slate-500 mt-0.5">Server setup</div></div>
+      <div class="font-mono"><div class="text-xl font-bold text-blue">~30 MB</div><div class="text-xs text-slate-500 mt-0.5">RAM usage</div></div>
+      <div class="font-mono"><div class="text-xl font-bold text-blue">2 deps</div><div class="text-xs text-slate-500 mt-0.5">pip packages</div></div>
+      <div class="font-mono"><div class="text-xl font-bold text-blue">MIT</div><div class="text-xs text-slate-500 mt-0.5">License</div></div>
+      <div class="font-mono"><div class="text-xl font-bold text-blue">10+</div><div class="text-xs text-slate-500 mt-0.5">Bot tasks</div></div>
+    </div>
+  </div>
+
+  <!-- 01 INTRODUCTION -->
+  <section class="section mb-16" id="introduction">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">01</span> Introduction</h2>
+    <p class="body-text">XtermChat is a lightweight, self-hosted chat system built for the terminal. Unlike third-party platforms, XtermChat stores nothing on external servers. You deploy the server on your own VPS, connect with the CLI client or a browser, and all messages stay on infrastructure you control.</p>
+    <p class="body-text">It is designed for developers and sysadmins who want something simple that <em>just works</em> — without the overhead of Matrix, the enterprise focus of Mattermost, or the data concerns of Slack. It also ships with a full <strong>bot monitoring system</strong> and a <strong>web admin panel</strong>.</p>
+    <div class="overflow-x-auto border border-border rounded-xl mt-4">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-border bg-surface">
+          <th class="text-left px-4 py-2.5 text-slate-500 font-mono text-[10px] uppercase tracking-wider"></th>
+          <th class="text-left px-4 py-2.5 text-slate-500 font-mono text-[10px] uppercase tracking-wider">XtermChat</th>
+          <th class="text-left px-4 py-2.5 text-slate-500 font-mono text-[10px] uppercase tracking-wider">Matrix</th>
+          <th class="text-left px-4 py-2.5 text-slate-500 font-mono text-[10px] uppercase tracking-wider">Mattermost</th>
+          <th class="text-left px-4 py-2.5 text-slate-500 font-mono text-[10px] uppercase tracking-wider">Slack</th>
+        </tr></thead>
+        <tbody class="divide-y divide-border">
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Self-hosted</td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Setup time</td>
+            <td class="px-4 py-2.5 text-slate-200 font-semibold">~5 min</td><td class="px-4 py-2.5 text-slate-400">~2 hrs</td><td class="px-4 py-2.5 text-slate-400">~30 min</td><td class="px-4 py-2.5 text-slate-400">Instant</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">RAM usage</td>
+            <td class="px-4 py-2.5 text-slate-200 font-semibold">~30 MB</td><td class="px-4 py-2.5 text-slate-400">~1–2 GB</td><td class="px-4 py-2.5 text-slate-400">~300 MB</td><td class="px-4 py-2.5 text-slate-400">—</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Terminal-first</td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Bot monitoring</td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Built-in</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td>
+            <td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 02 HOW IT WORKS -->
+  <section class="section mb-16" id="how-it-works">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">02</span> How it works</h2>
+    <p class="body-text">XtermChat has two parts: a <strong>server</strong> you deploy on a VPS, and a <strong>client</strong> your team installs. They communicate over a REST API with JSON payloads. The client also ships with a bot system and web admin panel.</p>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden my-4">
+      <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
+        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+        <span class="text-slate-500 text-[10px] font-mono ml-2">architecture</span>
       </div>
-      <h1 class="font-mono font-bold text-3xl sm:text-4xl text-slate-100 leading-tight mb-3">
-        XtermChat<br><span class="text-blue">Documentation</span>
-      </h1>
-      <p class="text-slate-400 text-base max-w-lg mb-7">Self-hosted terminal chat. Your server, your data, your rules. Setup in under 10 minutes.</p>
-      <div class="flex flex-wrap gap-3">
-        <a href="#server-setup" class="inline-flex items-center gap-2 bg-blue hover:bg-bluedim text-white font-mono font-semibold text-xs px-4 py-2.5 rounded-lg transition-all hover:-translate-y-0.5 no-underline">→ Quick Start</a>
-        <a href="https://github.com/dnysaz/xtc-server" class="inline-flex items-center gap-2 bg-transparent border border-border hover:border-dim text-slate-400 hover:text-slate-200 font-mono text-xs px-4 py-2.5 rounded-lg transition-all no-underline">
-          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
-          xtc-server ↗
-        </a>
-        <a href="https://github.com/dnysaz/xtc-client" class="inline-flex items-center gap-2 bg-transparent border border-border hover:border-dim text-slate-400 hover:text-slate-200 font-mono text-xs px-4 py-2.5 rounded-lg transition-all no-underline">
-          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1.01.07 1.54 1.02 1.54 1.02.9 1.52 2.36 1.08 2.94.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.41.2 2.45.1 2.71.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.68.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/></svg>
-          xtc-client ↗
-        </a>
+      <div class="terminal-body"><span class="t-dim">
+┌──────────────────────────────────────────────┐
+│           YOUR VPS (:8080)                   │
+│  xtc-server  Python + Flask + SQLite         │
+│  ┌─────────┐ ┌──────────┐ ┌───────┐ ┌─────┐  │
+│  │  rooms  │ │ messages │ │ users │ │bots │  │
+│  └─────────┘ └──────────┘ └───────┘ └─────┘  │
+│           xtc.db  (single file)              │
+│           bot_runner.py (background)         │
+└─────────────────┬────────────────────────────┘
+                  │  REST API  HTTP / HTTPS
+        ┌─────────┼──────────┐
+        │         │          │
+ ┌──────▼──┐ ┌────▼────┐ ┌───▼──────┐
+ │ CLI Mac │ │Web :5000│ │CLI Linux │
+ │ xtc-cli │ │ Admin   │ │ xtc-cli  │
+ └─────────┘ └─────────┘ └──────────┘</span></div>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-3 mt-4">
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">🐍</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Backend</div>
+        <p class="text-slate-400 text-xs m-0">Python + Flask. SQLite3 auto-created. No external DB needed. Runs on 2 pip packages.</p>
       </div>
-      <!-- Stats -->
-      <div class="flex flex-wrap gap-6 mt-8 pt-6 border-t border-border">
-        <div class="font-mono"><div class="text-xl font-bold text-blue">~5 min</div><div class="text-xs text-slate-500 mt-0.5">Server setup</div></div>
-        <div class="font-mono"><div class="text-xl font-bold text-blue">~30 MB</div><div class="text-xs text-slate-500 mt-0.5">RAM usage</div></div>
-        <div class="font-mono"><div class="text-xl font-bold text-blue">2 deps</div><div class="text-xs text-slate-500 mt-0.5">pip packages</div></div>
-        <div class="font-mono"><div class="text-xl font-bold text-blue">MIT</div><div class="text-xs text-slate-500 mt-0.5">License</div></div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">⌨️</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">CLI Client</div>
+        <p class="text-slate-400 text-xs m-0">Built with <code>prompt_toolkit</code>. Full TUI with sidebar, mention highlight, link detection, emoji, and copy.</p>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">🌐</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Web Admin</div>
+        <p class="text-slate-400 text-xs m-0">Flask serves HTML at <code>:5000</code>. Full admin panel: rooms, chat, bot management, dashboard.</p>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">🤖</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Bot System</div>
+        <p class="text-slate-400 text-xs m-0">Background process on VPS. Monitors CPU, RAM, disk, uptime, SSL, logs, and more. Alerts sent to any room.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 REQUIREMENTS -->
+  <section class="section mb-16" id="requirements">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">03</span> Requirements</h2>
+    <div class="grid sm:grid-cols-3 gap-3">
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">🖥️</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-2">Server (VPS)</div>
+        <ul class="text-xs text-slate-400 space-y-1 list-none">
+          <li>Ubuntu 20.04+ / Debian 11+</li>
+          <li>Python 3.8+ and pip</li>
+          <li>Port 8080 open (TCP)</li>
+          <li>512 MB RAM minimum</li>
+          <li>Any $4–6/month VPS</li>
+        </ul>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">💻</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-2">CLI Client</div>
+        <ul class="text-xs text-slate-400 space-y-1 list-none">
+          <li>macOS 11+ or Linux</li>
+          <li>Python 3.8+ and pip</li>
+          <li><code>make</code> for install</li>
+          <li>UTF-8 terminal</li>
+          <li><code>xclip</code> or <code>xsel</code> (Linux)</li>
+        </ul>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">🪟</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-2">Windows</div>
+        <ul class="text-xs text-slate-400 space-y-1 list-none">
+          <li>Python 3.10+ from python.org</li>
+          <li>Windows Terminal recommended</li>
+          <li>Run <code>.\install.bat</code></li>
+          <li>Clipboard via <code>clip</code> built-in</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-3 flex gap-2.5 items-start bg-green-950/40 border border-green-900/50 rounded-xl p-3.5 text-green-400 text-xs">
+      <span class="text-sm mt-0.5">💡</span>
+      <p class="m-0">The cheapest VPS tier (DigitalOcean, Hetzner, Vultr — $4–6/month, 512 MB RAM) is more than enough for a team of 2–50 people.</p>
+    </div>
+  </section>
+
+  <!-- 04 SERVER SETUP -->
+  <section class="section mb-16" id="server-setup">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">04</span> Server setup</h2>
+    <p class="body-text">SSH into your VPS and follow these steps. The entire process takes about 5 minutes.</p>
+    <div class="space-y-3">
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">1</div>
+        <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Clone the server</p>
+        <pre><code>git clone https://github.com/dnysaz/xtc-server.git
+cd xtc-server</code></pre></div>
+      </div>
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">2</div>
+        <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Install dependencies</p>
+        <pre><code>pip3 install flask flask-cors werkzeug psutil</code></pre>
+        <p class="body-text text-xs m-0 mt-1"><code>psutil</code> is required for the bot monitoring system.</p></div>
+      </div>
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">3</div>
+        <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Open port 8080</p>
+        <pre><code>sudo ufw allow 8080 && sudo ufw enable</code></pre>
+        <div class="mt-2 flex gap-2 items-start bg-yellow-950/40 border border-yellow-900/50 rounded-lg p-2.5 text-yellow-400 text-xs">
+          <span>⚠️</span><p class="m-0">If your VPS has a separate firewall panel (DigitalOcean, Vultr), also open TCP 8080 there.</p>
+        </div></div>
+      </div>
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">4</div>
+        <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Start the server</p>
+        <pre><code>python3 server.py start
+# [*] Server started in background (PID: 12345)</code></pre></div>
+      </div>
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">5</div>
+        <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Verify</p>
+        <pre><code>curl http://localhost:8080
+# {"service": "XtermChat Gateway", "status": "online", "version": "1.1"}</code></pre></div>
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════ SECTIONS ══ -->
-
-    <!-- 01 INTRODUCTION -->
-    <section class="section mb-16" id="introduction">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">01</span> Introduction</h2>
-      <p class="body-text">XtermChat is a lightweight, self-hosted chat system built for the terminal. Unlike third-party platforms, XtermChat stores nothing on external servers. You deploy the server on your own VPS, connect with the CLI client or a browser, and all messages stay on infrastructure you control.</p>
-      <p class="body-text">It is designed for developers and sysadmins who want something simple that <em>just works</em> — without the overhead of Matrix, the enterprise focus of Mattermost, or the data concerns of Slack.</p>
-
-      <div class="overflow-x-auto border border-border rounded-xl mt-4">
-        <table class="w-full text-xs">
-          <thead><tr class="border-b border-border bg-surface">
-            <th class="text-left px-4 py-2.5 text-slate-500 font-mono font-semibold uppercase tracking-wider text-[10px]"></th>
-            <th class="text-left px-4 py-2.5 text-slate-500 font-mono font-semibold uppercase tracking-wider text-[10px]">XtermChat</th>
-            <th class="text-left px-4 py-2.5 text-slate-500 font-mono font-semibold uppercase tracking-wider text-[10px]">Matrix</th>
-            <th class="text-left px-4 py-2.5 text-slate-500 font-mono font-semibold uppercase tracking-wider text-[10px]">Mattermost</th>
-            <th class="text-left px-4 py-2.5 text-slate-500 font-mono font-semibold uppercase tracking-wider text-[10px]">Slack</th>
-          </tr></thead>
-          <tbody class="divide-y divide-border">
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Self-hosted</td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Open source</td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ MIT</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-yellow-950 text-yellow-400 border border-yellow-900">⚠ Partial</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Setup time</td><td class="px-4 py-2.5 text-slate-200 font-semibold">~5 min</td><td class="px-4 py-2.5 text-slate-400">~2 hrs</td><td class="px-4 py-2.5 text-slate-400">~30 min</td><td class="px-4 py-2.5 text-slate-400">Instant</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">RAM usage</td><td class="px-4 py-2.5 text-slate-200 font-semibold">~30 MB</td><td class="px-4 py-2.5 text-slate-400">~1–2 GB</td><td class="px-4 py-2.5 text-slate-400">~300 MB</td><td class="px-4 py-2.5 text-slate-400">—</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Terminal-first</td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Your data</td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td></tr>
-          </tbody>
-        </table>
+    <h3 class="sub-title">File structure</h3>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden">
+      <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
+        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+        <span class="text-slate-500 text-[10px] font-mono ml-2">xtc-server/</span>
       </div>
-    </section>
+      <div class="terminal-body"><span class="t-blue">xtc-server/</span>
+<span class="t-dim">├── </span><span class="t-cmd">server.py</span>       <span class="t-out">Flask app, all API + bot routes</span>
+<span class="t-dim">├── </span><span class="t-cmd">db.py</span>           <span class="t-out">Database init (users, rooms, messages, bots)</span>
+<span class="t-dim">├── </span><span class="t-cmd">room.py</span>         <span class="t-out">Room CRUD, bcrypt password hashing</span>
+<span class="t-dim">├── </span><span class="t-cmd">connection.py</span>   <span class="t-out">Message save and retrieval</span>
+<span class="t-dim">├── </span><span class="t-cmd">bot_runner.py</span>   <span class="t-out">Bot background process (runs on VPS)</span>
+<span class="t-dim">├── </span><span class="t-cmd">check_db.py</span>     <span class="t-out">Interactive database inspector</span>
+<span class="t-dim">├── </span><span class="t-green">xtc.db</span>          <span class="t-out">SQLite database (auto-created)</span>
+<span class="t-dim">├── </span><span class="t-green">server.log</span>      <span class="t-out">Output log (auto-created)</span>
+<span class="t-dim">└── </span><span class="t-green">server.pid</span>      <span class="t-out">Process ID file (auto-created)</span></div>
+    </div>
+  </section>
 
-    <!-- 02 HOW IT WORKS -->
-    <section class="section mb-16" id="how-it-works">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">02</span> How it works</h2>
-      <p class="body-text">XtermChat has two parts: a <strong>server</strong> you deploy on a VPS, and a <strong>client</strong> your team installs on their machines. They communicate over a simple REST API with JSON payloads.</p>
+  <!-- 05 CLIENT SETUP -->
+  <section class="section mb-16" id="client-setup">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">05</span> Client setup</h2>
 
-      <div class="bg-surface border border-border rounded-xl overflow-hidden my-4">
-        <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
-          <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-          <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-          <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-          <span class="text-slate-500 text-[10px] font-mono ml-2">architecture</span>
-        </div>
-        <div class="terminal-body"><span class="t-dim">
-┌─────────────────────────────────────────────────┐
-│               YOUR VPS (:8080)                  │
-│   xtc-server  Python + Flask + SQLite           │
-│   ┌──────────┐  ┌──────────┐  ┌──────────┐      │
-│   │  rooms   │  │ messages │  │  users   │      │
-│   └──────────┘  └──────────┘  └──────────┘      │
-│            xtc.db  (single file)                │
-└──────────────────┬──────────────────────────────┘
-                   │  REST API over HTTP / HTTPS
-         ┌─────────┼──────────┐
-         │         │          │
-  ┌──────▼───┐ ┌───▼────┐ ┌───▼───────┐
-  │ CLI Mac  │ │Browser │ │ CLI Linux │
-  │ xtc-cli  │ │ :5000  │ │ xtc-cli   │
-  └──────────┘ └────────┘ └───────────┘</span></div>
-      </div>
-
-      <div class="grid sm:grid-cols-2 gap-3 mt-4">
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="text-xl mb-2">🐍</div>
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Backend</div>
-          <p class="text-slate-400 text-xs m-0">Python + Flask. Two pip packages. SQLite3 — no external database needed.</p>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="text-xl mb-2">⌨️</div>
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">CLI Client</div>
-          <p class="text-slate-400 text-xs m-0">Built with <code>prompt_toolkit</code>. Full TUI with sidebar, emoji, link detection, and copy.</p>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="text-xl mb-2">🌐</div>
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Web Client</div>
-          <p class="text-slate-400 text-xs m-0">Flask serves static HTML. Same API as CLI — web and terminal users share rooms.</p>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="text-xl mb-2">🔑</div>
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Auth</div>
-          <p class="text-slate-400 text-xs m-0">CLI uses hardware UUID (device-bound). Web uses a 5-digit PIN. No accounts.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 REQUIREMENTS -->
-    <section class="section mb-16" id="requirements">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">03</span> Requirements</h2>
-      <div class="grid sm:grid-cols-3 gap-3">
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="text-xl mb-2">🖥️</div>
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-2">Server</div>
-          <ul class="text-xs text-slate-400 space-y-1 list-none">
-            <li>Ubuntu 20.04+ / Debian 11+</li>
-            <li>Python 3.8+ and pip</li>
-            <li>Port 8080 open (TCP)</li>
-            <li>512 MB RAM minimum</li>
-            <li>Any $4–6/month VPS</li>
-          </ul>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="text-xl mb-2">💻</div>
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-2">CLI Client</div>
-          <ul class="text-xs text-slate-400 space-y-1 list-none">
-            <li>macOS 11+ or Linux</li>
-            <li>Python 3.8+ and pip</li>
-            <li><code>make</code> for install</li>
-            <li>UTF-8 terminal</li>
-            <li><code>xclip</code> or <code>xsel</code> (Linux copy)</li>
-          </ul>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="text-xl mb-2">🪟</div>
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-2">Windows</div>
-          <ul class="text-xs text-slate-400 space-y-1 list-none">
-            <li>Python 3.10+ from python.org</li>
-            <li>Windows Terminal recommended</li>
-            <li>Run <code>python xtc.py</code> directly</li>
-            <li>Clipboard via <code>clip</code> built-in</li>
-          </ul>
-        </div>
-      </div>
-      <div class="mt-3 flex gap-2.5 items-start bg-green-950/40 border border-green-900/50 rounded-xl p-3.5 text-green-400 text-xs">
-        <span class="text-sm mt-0.5">💡</span>
-        <p class="m-0">The cheapest VPS tier (DigitalOcean, Hetzner, Vultr — $4–6/month, 512 MB RAM) is more than enough for a team of 2–50 people.</p>
-      </div>
-    </section>
-
-    <!-- 04 SERVER SETUP -->
-    <section class="section mb-16" id="server-setup">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">04</span> Server setup</h2>
-      <p class="body-text">SSH into your VPS and follow these steps. The entire process takes about 5 minutes.</p>
-
-      <div class="space-y-3">
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">1</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Clone the server repository</p><pre><code>git clone https://github.com/dnysaz/xtc-server.git
-cd xtc-server</code></pre></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">2</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Install dependencies</p><pre><code>pip3 install flask flask-cors werkzeug</code></pre></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">3</div>
-          <div class="flex-1 min-w-0">
-            <p class="body-text text-xs mb-1">Open port 8080</p>
-            <pre><code>sudo ufw allow 8080
-sudo ufw enable
-sudo ufw status</code></pre>
-            <div class="mt-2 flex gap-2 items-start bg-yellow-950/40 border border-yellow-900/50 rounded-lg p-2.5 text-yellow-400 text-xs">
-              <span>⚠️</span><p class="m-0">If your VPS has a separate firewall panel (DigitalOcean, Vultr), also open TCP 8080 there.</p>
-            </div>
-          </div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">4</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Start the server</p><pre><code>python3 server.py start
-# [*] Server started in background (PID: 12345)</code></pre></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">5</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Verify it's running</p><pre><code>curl http://localhost:8080
-# {"service": "XtermChat Gateway", "status": "online", "version": "1.1"}</code></pre></div>
-        </div>
-      </div>
-
-      <h3 class="sub-title">File structure</h3>
-      <div class="bg-surface border border-border rounded-xl overflow-hidden">
-        <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
-          <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-          <span class="text-slate-500 text-[10px] font-mono ml-2">xtc-server/</span>
-        </div>
-        <div class="terminal-body"><span class="t-blue">xtc-server/</span>
-<span class="t-dim">├── </span><span class="t-cmd">server.py</span>      <span class="t-out">Flask app, all API routes</span>
-<span class="t-dim">├── </span><span class="t-cmd">db.py</span>          <span class="t-out">Database init and connection</span>
-<span class="t-dim">├── </span><span class="t-cmd">room.py</span>        <span class="t-out">Room CRUD, password hashing</span>
-<span class="t-dim">├── </span><span class="t-cmd">connection.py</span>  <span class="t-out">Message save and retrieval</span>
-<span class="t-dim">├── </span><span class="t-cmd">check_db.py</span>    <span class="t-out">Interactive database inspector</span>
-<span class="t-dim">├── </span><span class="t-green">xtc.db</span>         <span class="t-out">SQLite database (auto-created)</span>
-<span class="t-dim">├── </span><span class="t-green">server.log</span>     <span class="t-out">Output log (auto-created)</span>
-<span class="t-dim">└── </span><span class="t-green">server.pid</span>     <span class="t-out">Process ID file (auto-created)</span></div>
-      </div>
-
-      <h3 class="sub-title">Custom port</h3>
-      <p class="body-text text-xs">Default is <code>8080</code>. Edit the bottom of <code>server.py</code> to change it:</p>
-      <pre><code>elif command == "run_internal":
-    app.run(host='0.0.0.0', port=9000)  # ← change here
-else:
-    app.run(host='0.0.0.0', port=9000)  # ← and here</code></pre>
-    </section>
-
-    <!-- 05 CLIENT SETUP -->
-    <section class="section mb-16" id="client-setup">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">05</span> Client setup</h2>
-
-      <h3 class="sub-title">macOS / Linux</h3>
-      <div class="space-y-3">
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">1</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Clone the client</p><pre><code>git clone https://github.com/dnysaz/xtc-client.git
+    <h3 class="sub-title">macOS / Linux</h3>
+    <div class="space-y-3">
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">1</div>
+        <div class="flex-1 min-w-0"><pre><code>git clone https://github.com/dnysaz/xtc-client.git
 cd xtc-client</code></pre></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">2</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Install — creates global <code>xtc</code> command</p><pre><code>make install</code></pre></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">3</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Verify installation</p><pre><code>xtc</code></pre></div>
-        </div>
       </div>
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">2</div>
+        <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Install — creates global <code>xtc</code> command</p>
+        <pre><code>make install</code></pre></div>
+      </div>
+    </div>
 
-      <h3 class="sub-title">Windows (native — no WSL needed)</h3>
-      <div class="space-y-3 mt-2">
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">1</div>
-          <div class="flex-1"><p class="body-text text-xs m-0">Install <strong>Python 3.10+</strong> from <a href="https://python.org" class="text-blue">python.org</a> — check "Add to PATH" during install</p></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">2</div>
-          <div class="flex-1"><p class="body-text text-xs m-0">Install <strong>Windows Terminal</strong> from the Microsoft Store for best Unicode and emoji support</p></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">3</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Clone and install</p><pre><code>git clone https://github.com/dnysaz/xtc-client.git
+    <h3 class="sub-title">Windows</h3>
+    <div class="space-y-3 mt-2">
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">1</div>
+        <div class="flex-1"><p class="body-text text-xs m-0">Install <strong>Python 3.10+</strong> from <a href="https://python.org">python.org</a> — check "Add to PATH"</p></div>
+      </div>
+      <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
+        <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">2</div>
+        <div class="flex-1 min-w-0"><pre><code>git clone https://github.com/dnysaz/xtc-client.git
 cd xtc-client
-pip install -r requirements.txt</code></pre></div>
-        </div>
-        <div class="flex gap-3 bg-surface border border-border hover:border-blue/30 rounded-xl p-4 transition-colors">
-          <div class="w-6 h-6 bg-blue rounded-md flex items-center justify-center font-mono font-bold text-xs text-white shrink-0 mt-0.5">4</div>
-          <div class="flex-1 min-w-0"><p class="body-text text-xs mb-1">Run</p><pre><code>python xtc.py</code></pre></div>
-        </div>
+.\install.bat</code></pre></div>
       </div>
+    </div>
+    <div class="mt-3 flex gap-2.5 items-start bg-blue/5 border border-blue/20 rounded-xl p-3.5 text-blue/80 text-xs">
+      <span class="text-sm mt-0.5">ℹ️</span>
+      <p class="m-0">Config saved to <code>~/.xtc_config.json</code>. Managed by <code>xtc connect</code> and <code>xtc disconnect</code>.</p>
+    </div>
+  </section>
 
-      <div class="mt-3 flex gap-2.5 items-start bg-blue/5 border border-blue/20 rounded-xl p-3.5 text-blue text-xs">
-        <span class="text-sm mt-0.5">ℹ️</span>
-        <p class="m-0 text-blue/80">Configuration saved to <code>~/.xtc_config.json</code>. Managed by <code>xtc connect</code> and <code>xtc disconnect</code>.</p>
+  <!-- 06 FIRST TIME USE -->
+  <section class="section mb-16" id="first-use">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">06</span> First time use</h2>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden">
+      <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
+        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+        <span class="text-slate-500 text-[10px] font-mono ml-2">bash</span>
       </div>
-    </section>
-
-    <!-- 06 FIRST TIME USE -->
-    <section class="section mb-16" id="first-use">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">06</span> First time use</h2>
-      <div class="bg-surface border border-border rounded-xl overflow-hidden">
-        <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
-          <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-          <span class="text-slate-500 text-[10px] font-mono ml-2">bash</span>
-        </div>
-        <div class="terminal-body"><span class="t-dim"># 1. Connect to your server</span>
-<span class="t-prompt">$</span> <span class="t-cmd">xtc connect @103.45.67.89:8080</span>
+      <div class="terminal-body"><span class="t-prompt">$</span> <span class="t-cmd">xtc connect @your-server-ip:8080</span>
 <span class="t-green">[*] Configuration saved</span>
-<span class="t-green">[*] Linked to gateway: http://103.45.67.89:8080</span>
+<span class="t-green">[*] Linked to gateway: http://your-server-ip:8080</span>
 
-<span class="t-dim"># 2. Verify connection</span>
 <span class="t-prompt">$</span> <span class="t-cmd">xtc status</span>
-<span class="t-out"> GATEWAY :  http://103.45.67.89:8080
+<span class="t-out"> GATEWAY :  http://your-server-ip:8080
  SERVICE :  XtermChat Gateway v1.1
  STATUS  :  ONLINE (HTTP 200)
  LATENCY :  42 ms</span>
 
-<span class="t-dim"># 3. Create a room</span>
 <span class="t-prompt">$</span> <span class="t-cmd">xtc create:room @general</span>
 <span class="t-green">[*] SUCCESS: Room '@general' is live (public 🌐)</span>
 
-<span class="t-dim"># 4. Start chatting</span>
 <span class="t-prompt">$</span> <span class="t-cmd">xtc start:chat @general</span></div>
+    </div>
+  </section>
+
+  <!-- 07 CLI COMMANDS -->
+  <section class="section mb-16" id="cli-commands">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">07</span> CLI commands</h2>
+    <div class="overflow-x-auto border border-border rounded-xl">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-border bg-surface">
+          <th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Command</th>
+          <th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Args</th>
+          <th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Description</th>
+        </tr></thead>
+        <tbody class="divide-y divide-border">
+          <tr class="hover:bg-white/[.02]"><td colspan="3" class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-dim font-mono">Connection</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc connect</code></td><td class="px-4 py-2.5 text-slate-500"><code>@IP:PORT</code></td><td class="px-4 py-2.5 text-slate-400">Save server address to config</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc disconnect</code></td><td class="px-4 py-2.5 text-slate-500"><code>@IP:PORT</code></td><td class="px-4 py-2.5 text-slate-400">Remove saved server config</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc status</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">Check connection and latency</td></tr>
+          <tr class="hover:bg-white/[.02]"><td colspan="3" class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-dim font-mono border-t border-border">Rooms</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc list:rooms</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">List all rooms on the server</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc create:room</code></td><td class="px-4 py-2.5 text-slate-500"><code>@name [pass]</code></td><td class="px-4 py-2.5 text-slate-400">Create a room (no args = interactive)</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc delete:room</code></td><td class="px-4 py-2.5 text-slate-500"><code>@name</code></td><td class="px-4 py-2.5 text-slate-400">Delete a room (creator only)</td></tr>
+          <tr class="hover:bg-white/[.02]"><td colspan="3" class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-dim font-mono border-t border-border">Chat</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc start:chat</code></td><td class="px-4 py-2.5 text-slate-500"><code>@name</code></td><td class="px-4 py-2.5 text-slate-400">Open interactive chat TUI</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc start:web</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">Start web admin at localhost:5000</td></tr>
+          <tr class="hover:bg-white/[.02]"><td colspan="3" class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-dim font-mono border-t border-border">Bots</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc list:bots</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">List all registered bots</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc start:bot</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">Interactive bot setup wizard</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc stop:bot</code></td><td class="px-4 py-2.5 text-slate-500"><code>&lt;id&gt;</code></td><td class="px-4 py-2.5 text-slate-400">Stop a running bot</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc delete:bot</code></td><td class="px-4 py-2.5 text-slate-500"><code>&lt;id&gt; | all</code></td><td class="px-4 py-2.5 text-slate-400">Delete bot(s) from database</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 08 CHAT INTERFACE -->
+  <section class="section mb-16" id="chat-interface">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">08</span> Chat interface</h2>
+    <p class="body-text">Running <code>xtc start:chat</code> opens a full terminal UI with three panels and a dual-focus mode system.</p>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden my-4">
+      <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
+        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+        <span class="text-slate-500 text-[10px] font-mono ml-2">chat UI</span>
       </div>
-    </section>
-
-    <!-- 07 CLI COMMANDS -->
-    <section class="section mb-16" id="cli-commands">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">07</span> CLI commands</h2>
-      <div class="overflow-x-auto border border-border rounded-xl">
-        <table class="w-full text-xs">
-          <thead><tr class="border-b border-border bg-surface"><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Command</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Args</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Description</th></tr></thead>
-          <tbody class="divide-y divide-border">
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc connect</code></td><td class="px-4 py-2.5 text-slate-500"><code>@IP:PORT</code></td><td class="px-4 py-2.5 text-slate-400">Save server address to config</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc disconnect</code></td><td class="px-4 py-2.5 text-slate-500"><code>@IP:PORT</code></td><td class="px-4 py-2.5 text-slate-400">Remove saved server config</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc status</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">Check connection and latency</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc list:rooms</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">List all rooms on the server</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc create:room</code></td><td class="px-4 py-2.5 text-slate-500"><code>@name [pass]</code></td><td class="px-4 py-2.5 text-slate-400">Create a room. No args = interactive</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc delete:room</code></td><td class="px-4 py-2.5 text-slate-500"><code>@name</code></td><td class="px-4 py-2.5 text-slate-400">Delete a room (creator only)</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc start:chat</code></td><td class="px-4 py-2.5 text-slate-500"><code>@name</code></td><td class="px-4 py-2.5 text-slate-400">Open interactive chat TUI</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>xtc start:web</code></td><td class="px-4 py-2.5 text-slate-500">—</td><td class="px-4 py-2.5 text-slate-400">Start web UI at localhost:5000</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <pre><code># Connect to server
-xtc connect @103.45.67.89:8080
-
-# Create a private room with password
-xtc create:room @devteam mypassword
-
-# Interactive room creation
-xtc create:room
-
-# Join a private room (password prompted automatically)
-xtc start:chat @devteam</code></pre>
-    </section>
-
-    <!-- 08 CHAT INTERFACE -->
-    <section class="section mb-16" id="chat-interface">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">08</span> Chat interface</h2>
-      <p class="body-text">Running <code>xtc start:chat</code> opens a full terminal UI with three panels and a dual-focus mode system.</p>
-
-      <div class="bg-surface border border-border rounded-xl overflow-hidden my-4">
-        <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
-          <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-          <span class="text-slate-500 text-[10px] font-mono ml-2">chat UI layout</span>
-        </div>
-        <div class="terminal-body"><span class="t-blue">  XtermChat-CLI  |  NODE: mac-dana  |  103.45.67.89  |  [ INPUT ]</span>
+      <div class="terminal-body"><span class="t-blue">  XtermChat-CLI  |  NODE: mac-dana  |  server-ip  |  [ INPUT ]</span>
 <span class="t-dim">┌──────────────────┬──────────────────────────────────┬─────────────────┐
-│</span> <span class="t-cmd">ID</span>               <span class="t-dim">│</span>                                  <span class="t-dim">│</span> <span class="t-cmd">CHANNEL</span>         <span class="t-dim">│</span>
-<span class="t-dim">│</span>  <span class="t-blue">KETUT</span>           <span class="t-dim">│  </span><span class="t-out">now</span>  <span class="t-blue">You  </span><span class="t-dim">❯</span>  <span class="t-cmd">hello everyone  </span>  <span class="t-dim">│</span>  <span class="t-blue">#GENERAL</span>       <span class="t-dim">│</span>
-<span class="t-dim">│</span>                  <span class="t-dim">│  </span><span class="t-out">2m</span>   <span class="t-cmd">AGUNG</span><span class="t-dim">❯</span>  hey!              <span class="t-dim">│</span>                 <span class="t-dim">│</span>
-<span class="t-dim">│</span> <span class="t-cmd">GATEWAY</span>          <span class="t-dim">│  </span><span class="t-out">5m</span>   <span class="t-blue">You  </span><span class="t-dim">❯</span>  <span class="t-blue">https://x.com</span>     <span class="t-dim">│</span> <span class="t-cmd">CREATOR</span>         <span class="t-dim">│</span>
-<span class="t-dim">│</span>  103.45.67.89    <span class="t-dim">│</span>                                  <span class="t-dim">│</span>  KETUT          <span class="t-dim">│</span>
-<span class="t-dim">│</span> <span class="t-cmd">AUTH</span>  </span><span class="t-green">LOCKED</span>    <span class="t-dim">│</span>                                  <span class="t-dim">│</span>  14 Mar 2026    <span class="t-dim">│</span>
+│</span> <span class="t-cmd">ID</span>               <span class="t-dim">│                                  │</span> <span class="t-cmd">CHANNEL</span>         <span class="t-dim">│</span>
+<span class="t-dim">│</span>  <span class="t-blue">KETUT</span>           <span class="t-dim">│  now  </span><span class="t-blue">You  ❯</span>  <span class="t-cmd">hello everyone   </span> <span class="t-dim">│  </span><span class="t-blue">#GENERAL</span>       <span class="t-dim">│</span>
+<span class="t-dim">│                  │  2m   </span><span class="t-cmd">AGUNG❯</span>  hey!              <span class="t-dim">│                 │</span>
+<span class="t-dim">│</span> <span class="t-cmd">GATEWAY</span>          <span class="t-dim">│  5m   </span><span class="t-blue">You  ❯</span>  <span class="t-blue">https://x.com</span>    <span class="t-dim">│  MESSAGES       │</span>
+<span class="t-dim">│</span>  server-ip       <span class="t-dim">│                                  │  247 total      │</span>
+<span class="t-dim">│</span> <span class="t-cmd">AUTH</span>  <span class="t-green">LOCKED</span>    <span class="t-dim">│                                  │  14 Mar 2026    │</span>
 <span class="t-dim">└──────────────────┴──────────────────────────────────┴─────────────────┘</span>
-<span class="t-out"> ✏️  INPUT MODE  │  ENTER: SEND  │  TAB: → CHAT  │  Ctrl+X: EXIT</span>
+<span class="t-out"> ✏️  INPUT MODE  │  ENTER: SEND  │  ↑↓: HISTORY  │  TAB: → CHAT  │  Ctrl+X: EXIT</span>
 <span class="t-dim"> Message ❯❯❯ </span><span class="t-cmd">_</span></div>
-      </div>
+    </div>
 
-      <h3 class="sub-title">Focus modes</h3>
-      <div class="grid sm:grid-cols-2 gap-3 mt-2">
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-2">✏️ INPUT MODE <span class="text-xs text-slate-500 font-normal">(default)</span></div>
-          <p class="text-slate-400 text-xs m-0">Cursor in message box. Type and send. Commands <code>:clear</code>, <code>:purge</code>, <code>:e</code> active.</p>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
-          <div class="font-mono font-semibold text-sm text-slate-200 mb-2">📋 CHAT MODE</div>
-          <p class="text-slate-400 text-xs m-0">Cursor in chat history. Scroll, select text, copy, open links. Auto-scroll pauses.</p>
-        </div>
+    <div class="grid sm:grid-cols-2 gap-3 mt-4 mb-5">
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-2">✏️ INPUT MODE <span class="text-xs text-slate-500 font-normal">(default)</span></div>
+        <p class="text-slate-400 text-xs m-0">Type and send. Commands <code>:clear</code> <code>:purge</code> <code>:reply</code> <code>:e</code> <code>:help</code> active. <kbd>↑↓</kbd> browse input history.</p>
       </div>
-
-      <h3 class="sub-title">Keyboard shortcuts</h3>
-      <p class="text-[11px] text-slate-500 font-mono uppercase tracking-wider mb-2">Global</p>
-      <div class="shortcuts bg-surface border border-border rounded-xl p-4 mb-3">
-        <span class="key"><kbd>Tab</kbd></span><span class="desc">Switch INPUT ↔ CHAT mode</span>
-        <span class="key"><kbd>Escape</kbd></span><span class="desc">Return to INPUT mode / close emoji panel</span>
-        <span class="key"><kbd>Ctrl</kbd>+<kbd>X</kbd></span><span class="desc">Exit chat</span>
-        <span class="key"><kbd>PageUp</kbd></span><span class="desc">Scroll chat up 12 lines</span>
-        <span class="key"><kbd>PageDown</kbd></span><span class="desc">Scroll chat down 12 lines</span>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-2">📋 CHAT MODE</div>
+        <p class="text-slate-400 text-xs m-0">Scroll, select text, copy, open links. New message counter shown when scrolled up. Auto-scroll pauses.</p>
       </div>
+    </div>
 
-      <p class="text-[11px] text-slate-500 font-mono uppercase tracking-wider mb-2">INPUT MODE</p>
-      <div class="shortcuts bg-surface border border-border rounded-xl p-4 mb-3">
-        <span class="key"><kbd>Enter</kbd></span><span class="desc">Send message</span>
-        <span class="key"><kbd>Ctrl</kbd>+<kbd>C</kbd></span><span class="desc">Exit chat</span>
-        <span class="key"><code>:clear</code></span><span class="desc">Clear local chat display (no server effect)</span>
-        <span class="key"><code>:purge</code></span><span class="desc">Delete all messages from server (creator only)</span>
-        <span class="key"><code>:e</code></span><span class="desc">Toggle emoji shortcuts panel</span>
-        <span class="key"><code>:q</code></span><span class="desc">Quit chat</span>
-      </div>
+    <h3 class="sub-title">Keyboard shortcuts</h3>
+    <p class="text-[11px] text-slate-500 font-mono uppercase tracking-wider mb-2">Global</p>
+    <div class="shortcuts bg-surface border border-border rounded-xl p-4 mb-3">
+      <span class="key"><kbd>Tab</kbd></span><span class="desc">Switch INPUT ↔ CHAT mode</span>
+      <span class="key"><kbd>Escape</kbd></span><span class="desc">Back to INPUT / close panel</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>X</kbd></span><span class="desc">Exit chat</span>
+      <span class="key"><kbd>PageUp</kbd> <kbd>PageDown</kbd></span><span class="desc">Scroll 12 lines</span>
+    </div>
+    <p class="text-[11px] text-slate-500 font-mono uppercase tracking-wider mb-2">INPUT MODE</p>
+    <div class="shortcuts bg-surface border border-border rounded-xl p-4 mb-3">
+      <span class="key"><kbd>Enter</kbd></span><span class="desc">Send message</span>
+      <span class="key"><kbd>↑</kbd> <kbd>↓</kbd></span><span class="desc">Browse input history (last 50 messages)</span>
+      <span class="key"><code>:clear</code></span><span class="desc">Clear local chat display</span>
+      <span class="key"><code>:purge</code></span><span class="desc">Purge server history (confirm modal)</span>
+      <span class="key"><code>:reply USER msg</code></span><span class="desc">Reply to a user → sends ↩ @USER: msg</span>
+      <span class="key"><code>:e</code></span><span class="desc">Toggle emoji shortcuts panel</span>
+      <span class="key"><code>:help</code></span><span class="desc">Show all keyboard shortcuts</span>
+    </div>
+    <p class="text-[11px] text-slate-500 font-mono uppercase tracking-wider mb-2">CHAT MODE</p>
+    <div class="shortcuts bg-surface border border-border rounded-xl p-4">
+      <span class="key"><kbd>↑</kbd> <kbd>↓</kbd></span><span class="desc">Scroll line by line</span>
+      <span class="key"><kbd>Home</kbd> / <kbd>End</kbd></span><span class="desc">Jump to top / bottom + resume auto-scroll</span>
+      <div class="divider"></div>
+      <span class="key"><kbd>Shift</kbd>+<kbd>Arrow</kbd></span><span class="desc">Select text</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>C</kbd></span><span class="desc">Copy selection to clipboard</span>
+      <span class="key"><kbd>Ctrl</kbd>+<kbd>L</kbd></span><span class="desc">Open link at cursor in browser</span>
+    </div>
 
-      <p class="text-[11px] text-slate-500 font-mono uppercase tracking-wider mb-2">CHAT MODE (after pressing Tab)</p>
-      <div class="shortcuts bg-surface border border-border rounded-xl p-4">
-        <span class="key"><kbd>↑</kbd> <kbd>↓</kbd></span><span class="desc">Scroll line by line</span>
-        <span class="key"><kbd>Home</kbd></span><span class="desc">Jump to top of chat</span>
-        <span class="key"><kbd>End</kbd></span><span class="desc">Jump to bottom, resume auto-scroll</span>
-        <div class="divider"></div>
-        <span class="key"><kbd>Shift</kbd>+<kbd>←</kbd><kbd>→</kbd></span><span class="desc">Select character by character</span>
-        <span class="key"><kbd>Shift</kbd>+<kbd>↑</kbd><kbd>↓</kbd></span><span class="desc">Select line by line</span>
-        <span class="key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>→</kbd></span><span class="desc">Select next word</span>
-        <span class="key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd></span><span class="desc">Select previous word</span>
-        <div class="divider"></div>
-        <span class="key"><kbd>Ctrl</kbd>+<kbd>C</kbd></span><span class="desc">Copy selected text to clipboard</span>
-        <span class="key"><kbd>Ctrl</kbd>+<kbd>L</kbd></span><span class="desc">Open link at cursor in browser</span>
-      </div>
-    </section>
+    <h3 class="sub-title">New message notification</h3>
+    <p class="body-text text-xs">When you're in CHAT MODE and new messages arrive, a counter appears at the top of the chat area:</p>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden">
+      <div class="terminal-body"><span class="t-blue"> ▼ 3 new messages — press End to jump down  │  TAB: → INPUT  │  Ctrl+X: EXIT</span></div>
+    </div>
 
-    <!-- 09 WEB INTERFACE -->
-    <section class="section mb-16" id="web-interface">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">09</span> Web interface</h2>
-      <p class="body-text">XtermChat includes a browser-based UI. Start it with:</p>
-      <pre><code>xtc start:web
+    <h3 class="sub-title">Mention highlight</h3>
+    <p class="body-text text-xs">When someone mentions your username in a message, the entire line is highlighted in yellow for visibility.</p>
+
+    <h3 class="sub-title">Reconnect behavior</h3>
+    <p class="body-text text-xs">If the server becomes unreachable, the status bar updates automatically. After 3 failed polls → <code>🔄 RECONNECTING...</code>. After 8 → <code>❌ OFFLINE</code>. The client resumes automatically when the server is back.</p>
+  </section>
+
+  <!-- 09 WEB ADMIN -->
+  <section class="section mb-16" id="web-interface">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">09</span> Web admin panel</h2>
+    <p class="body-text">XtermChat includes a full browser-based admin panel. Start it with:</p>
+    <pre><code>xtc start:web
 # URL: http://localhost:5000</code></pre>
-      <p class="body-text">Open <code>http://localhost:5000</code>. Enter server IP, port, username, and a 5-digit PIN to connect.</p>
-      <div class="mt-3 flex gap-2.5 items-start bg-blue/5 border border-blue/20 rounded-xl p-3.5 text-blue/80 text-xs">
-        <span class="text-sm mt-0.5">ℹ️</span>
-        <p class="m-0">Web PIN is a 5-digit number you choose — unlike CLI which uses hardware UUID automatically. Both clients share the same rooms and messages.</p>
-      </div>
-      <h3 class="sub-title">Web vs CLI</h3>
-      <div class="overflow-x-auto border border-border rounded-xl">
-        <table class="w-full text-xs">
-          <thead><tr class="border-b border-border bg-surface"><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider"></th><th class="px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider text-center">CLI</th><th class="px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider text-center">Web</th></tr></thead>
-          <tbody class="divide-y divide-border">
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">PIN type</td><td class="px-4 py-2.5 text-slate-300 text-center">Hardware UUID (auto)</td><td class="px-4 py-2.5 text-slate-300 text-center">5-digit (user-chosen)</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Device-bound</td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-yellow-950 text-yellow-400 border border-yellow-900">✗ No</span></td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Installation</td><td class="px-4 py-2.5 text-slate-300 text-center">Required</td><td class="px-4 py-2.5 text-slate-300 text-center">None (browser only)</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Mobile support</td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <p class="body-text">Enter your server IP, port, username, and a 5-digit PIN. After login you get a full admin dashboard.</p>
 
-    <!-- 10 ROOM MANAGEMENT -->
-    <section class="section mb-16" id="rooms">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">10</span> Room management</h2>
-      <pre><code># Public room — anyone on the server can join
+    <div class="grid sm:grid-cols-2 gap-3 mt-4 mb-5">
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">◈</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Dashboard</div>
+        <p class="text-slate-400 text-xs m-0">Server status, room count, active bots, quick actions, recent activity.</p>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">⊞</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Rooms</div>
+        <p class="text-slate-400 text-xs m-0">Create public or private rooms, delete rooms, jump into chat directly.</p>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">◎</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Chat</div>
+        <p class="text-slate-400 text-xs m-0">Real-time bubble chat, link preview with OG image/title, password room support, grouped messages.</p>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-4 hover:border-blue/40 transition-colors">
+        <div class="text-xl mb-2">🤖</div>
+        <div class="font-mono font-semibold text-sm text-slate-200 mb-1.5">Bots</div>
+        <p class="text-slate-400 text-xs m-0">Create, start, stop, and delete bots. See all bots including those created from CLI.</p>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto border border-border rounded-xl">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-border bg-surface">
+          <th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider"></th>
+          <th class="px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider text-center">CLI</th>
+          <th class="px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider text-center">Web</th>
+        </tr></thead>
+        <tbody class="divide-y divide-border">
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">PIN type</td><td class="px-4 py-2.5 text-slate-300 text-center">Hardware UUID (auto)</td><td class="px-4 py-2.5 text-slate-300 text-center">5-digit (user-chosen)</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Device-bound</td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-yellow-950 text-yellow-400 border border-yellow-900">✗ No</span></td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Create bots</td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-400">Mobile support</td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-400 border border-red-900">✗ No</span></td><td class="px-4 py-2.5 text-center"><span class="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">✓ Yes</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 10 ROOM MANAGEMENT -->
+  <section class="section mb-16" id="rooms">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">10</span> Room management</h2>
+    <pre><code># Public room
 xtc create:room @general
 
-# Private room — password required
+# Private room with password
 xtc create:room @team secretpassword
 
-# Interactive mode — prompts for name, password, description
+# Interactive mode
 xtc create:room</code></pre>
-      <p class="body-text">Private rooms appear in <code>xtc list:rooms</code> with a <strong>LOCKED</strong> label. Passwords are stored as bcrypt hashes — the raw password is never saved.</p>
-      <h3 class="sub-title">Creator privileges</h3>
-      <p class="body-text">When you create a room, your hardware UUID is recorded as <code>creator_pin</code>. Only you (from the same machine) can:</p>
-      <ul class="text-slate-400 text-sm list-disc pl-5 space-y-1 mb-4">
-        <li>Delete the room: <code>xtc delete:room @roomname</code></li>
-        <li>Purge all messages: type <code>:purge</code> inside chat</li>
-      </ul>
-      <div class="flex gap-2.5 items-start bg-yellow-950/40 border border-yellow-900/50 rounded-xl p-3.5 text-yellow-400 text-xs">
-        <span class="text-sm mt-0.5">⚠️</span>
-        <p class="m-0"><code>:purge</code> deletes all messages permanently from the server. The room itself remains. This action cannot be undone.</p>
-      </div>
-    </section>
+    <h3 class="sub-title">Creator privileges</h3>
+    <p class="body-text">When you create a room, your hardware UUID is recorded as <code>creator_pin</code>. Only you (from the same machine) can delete it or purge its messages.</p>
+    <div class="flex gap-2.5 items-start bg-yellow-950/40 border border-yellow-900/50 rounded-xl p-3.5 text-yellow-400 text-xs">
+      <span>⚠️</span>
+      <p class="m-0"><code>:purge</code> shows a confirmation modal before deleting. It permanently removes all messages from the server. The room itself remains. Cannot be undone.</p>
+    </div>
+  </section>
 
-    <!-- 11 EMOJI -->
-    <section class="section mb-16" id="emoji">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">11</span> Emoji shortcuts</h2>
-      <p class="body-text">Type any shortcut in a message — it auto-converts when you press Enter. Type <code>:e</code> to open the reference panel inside the chat.</p>
-      <div class="overflow-x-auto border border-border rounded-xl">
-        <table class="w-full text-xs">
-          <thead><tr class="border-b border-border bg-surface"><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Shortcut</th><th class="px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Emoji</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Shortcut</th><th class="px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Emoji</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Shortcut</th><th class="px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Emoji</th></tr></thead>
-          <tbody class="divide-y divide-border">
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:fire</code></td><td class="px-4 py-2 text-center">🔥</td><td class="px-4 py-2"><code>:check</code></td><td class="px-4 py-2 text-center">✅</td><td class="px-4 py-2"><code>:robot</code></td><td class="px-4 py-2 text-center">🤖</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:rocket</code></td><td class="px-4 py-2 text-center">🚀</td><td class="px-4 py-2"><code>:warn</code></td><td class="px-4 py-2 text-center">⚠️</td><td class="px-4 py-2"><code>:bug</code></td><td class="px-4 py-2 text-center">🪲</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:nice</code></td><td class="px-4 py-2 text-center">👍</td><td class="px-4 py-2"><code>:heart</code></td><td class="px-4 py-2 text-center">❤️</td><td class="px-4 py-2"><code>:coffee</code></td><td class="px-4 py-2 text-center">☕</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:cool</code></td><td class="px-4 py-2 text-center">😎</td><td class="px-4 py-2"><code>:star</code></td><td class="px-4 py-2 text-center">⭐</td><td class="px-4 py-2"><code>:beer</code></td><td class="px-4 py-2 text-center">🍺</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:laugh</code></td><td class="px-4 py-2 text-center">😂</td><td class="px-4 py-2"><code>:ghost</code></td><td class="px-4 py-2 text-center">👻</td><td class="px-4 py-2"><code>:globe</code></td><td class="px-4 py-2 text-center">🌐</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:smile</code></td><td class="px-4 py-2 text-center">😊</td><td class="px-4 py-2"><code>:party</code></td><td class="px-4 py-2 text-center">🎉</td><td class="px-4 py-2"><code>:key</code></td><td class="px-4 py-2 text-center">🔑</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:pray</code></td><td class="px-4 py-2 text-center">🙏</td><td class="px-4 py-2"><code>:100</code></td><td class="px-4 py-2 text-center">💯</td><td class="px-4 py-2"><code>:skull</code></td><td class="px-4 py-2 text-center">💀</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:muscle</code></td><td class="px-4 py-2 text-center">💪</td><td class="px-4 py-2"><code>:zap</code></td><td class="px-4 py-2 text-center">⚡</td><td class="px-4 py-2"><code>:lock</code></td><td class="px-4 py-2 text-center">🔒</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:cloud</code></td><td class="px-4 py-2 text-center">☁️</td><td class="px-4 py-2"><code>:box</code></td><td class="px-4 py-2 text-center">📦</td><td class="px-4 py-2"><code>:top</code></td><td class="px-4 py-2 text-center">🔝</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+  <!-- 11 EMOJI -->
+  <section class="section mb-16" id="emoji">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">11</span> Emoji shortcuts</h2>
+    <p class="body-text">Type any shortcut in a message — auto-converts on Enter. Type <code>:e</code> to open the reference panel inside chat.</p>
+    <div class="overflow-x-auto border border-border rounded-xl">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-border bg-surface">
+          <th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Shortcut</th><th class="px-4 py-2.5 text-center font-mono text-[10px] text-slate-500 uppercase tracking-wider">Emoji</th>
+          <th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Shortcut</th><th class="px-4 py-2.5 text-center font-mono text-[10px] text-slate-500 uppercase tracking-wider">Emoji</th>
+          <th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Shortcut</th><th class="px-4 py-2.5 text-center font-mono text-[10px] text-slate-500 uppercase tracking-wider">Emoji</th>
+        </tr></thead>
+        <tbody class="divide-y divide-border">
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:fire</code></td><td class="px-4 py-2 text-center">🔥</td><td class="px-4 py-2"><code>:check</code></td><td class="px-4 py-2 text-center">✅</td><td class="px-4 py-2"><code>:robot</code></td><td class="px-4 py-2 text-center">🤖</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:rocket</code></td><td class="px-4 py-2 text-center">🚀</td><td class="px-4 py-2"><code>:warn</code></td><td class="px-4 py-2 text-center">⚠️</td><td class="px-4 py-2"><code>:bug</code></td><td class="px-4 py-2 text-center">🪲</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:nice</code></td><td class="px-4 py-2 text-center">👍</td><td class="px-4 py-2"><code>:heart</code></td><td class="px-4 py-2 text-center">❤️</td><td class="px-4 py-2"><code>:coffee</code></td><td class="px-4 py-2 text-center">☕</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:cool</code></td><td class="px-4 py-2 text-center">😎</td><td class="px-4 py-2"><code>:star</code></td><td class="px-4 py-2 text-center">⭐</td><td class="px-4 py-2"><code>:skull</code></td><td class="px-4 py-2 text-center">💀</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:laugh</code></td><td class="px-4 py-2 text-center">😂</td><td class="px-4 py-2"><code>:party</code></td><td class="px-4 py-2 text-center">🎉</td><td class="px-4 py-2"><code>:lock</code></td><td class="px-4 py-2 text-center">🔒</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:pray</code></td><td class="px-4 py-2 text-center">🙏</td><td class="px-4 py-2"><code>:zap</code></td><td class="px-4 py-2 text-center">⚡</td><td class="px-4 py-2"><code>:key</code></td><td class="px-4 py-2 text-center">🔑</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2"><code>:muscle</code></td><td class="px-4 py-2 text-center">💪</td><td class="px-4 py-2"><code>:cloud</code></td><td class="px-4 py-2 text-center">☁️</td><td class="px-4 py-2"><code>:box</code></td><td class="px-4 py-2 text-center">📦</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- 12 IDENTITY -->
-    <section class="section mb-16" id="identity">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">12</span> Identity &amp; security</h2>
-      <h3 class="sub-title">How CLI identity works</h3>
-      <div class="bg-surface border border-border rounded-xl overflow-hidden my-3">
-        <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div><span class="text-slate-500 text-[10px] font-mono ml-2">identity flow</span></div>
-        <div class="terminal-body"><span class="t-out">machine UUID (IOPlatformUUID / /etc/machine-id)</span>
-         <span class="t-dim">↓</span>
+  <!-- 12 BOT SYSTEM -->
+  <section class="section mb-16" id="bots">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">12</span> Bot system</h2>
+    <p class="body-text">XtermChat has a built-in server monitoring bot system. Bots run as background processes on your VPS and send alerts to any room you choose. You can create bots from the CLI or from the web admin panel.</p>
+
+    <h3 class="sub-title">Setup flow</h3>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden my-3">
+      <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2">
+        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+        <span class="text-slate-500 text-[10px] font-mono ml-2">xtc start:bot</span>
+      </div>
+      <div class="terminal-body"><span class="t-blue">┌──────────────────────────────────────┐
+│   XTERMCHAT  ·  BOT SETUP            │
+└──────────────────────────────────────┘</span>
+
+<span class="t-dim">▸ SELECT ROOM  (room that will receive bot alerts)</span>
+
+<span class="t-out">  1.  @general      OPEN    by KETUT
+  2.  @alerts       OPEN    by KETUT</span>
+
+<span class="t-dim">▸ Bot name:</span> <span class="t-cmd">MONITOR</span>
+
+<span class="t-dim">▸ SELECT BOT TASKS</span>
+
+<span class="t-out">  1.  Resource Monitor     CPU, RAM, Disk usage
+  2.  Process Monitor      Watch if a service dies
+  3.  Uptime Watchdog      Ping a URL every N minutes
+  4.  Port Checker         Verify ports are open
+  ...</span>
+
+<span class="t-dim">▸ Select tasks:</span> <span class="t-cmd">1,3</span>
+<span class="t-dim">▸ Save and start? [yes]:</span> <span class="t-cmd">yes</span>
+
+<span class="t-green">✓ Config saved  (bot_id: 1)</span>
+<span class="t-green">✓ Bot started on server  (PID: 24891)</span></div>
+    </div>
+
+    <h3 class="sub-title">Available tasks</h3>
+    <div class="bot-task-grid mt-3">
+      <div class="bot-task-card"><div class="task-icon">📊</div><div class="task-name">Resource Monitor</div><div class="task-desc">CPU, RAM, Disk — alert if above threshold</div></div>
+      <div class="bot-task-card"><div class="task-icon">🔍</div><div class="task-name">Process Monitor</div><div class="task-desc">Watch if a service dies, optional auto-restart</div></div>
+      <div class="bot-task-card"><div class="task-icon">🌐</div><div class="task-name">Uptime Watchdog</div><div class="task-desc">Ping a URL every N minutes, alert if down</div></div>
+      <div class="bot-task-card"><div class="task-icon">🔌</div><div class="task-name">Port Checker</div><div class="task-desc">Verify specific ports are open</div></div>
+      <div class="bot-task-card"><div class="task-icon">📡</div><div class="task-name">Traffic Monitor</div><div class="task-desc">Network bandwidth in/out report</div></div>
+      <div class="bot-task-card"><div class="task-icon">🔒</div><div class="task-name">SSL Cert Checker</div><div class="task-desc">Alert N days before cert expires</div></div>
+      <div class="bot-task-card"><div class="task-icon">📋</div><div class="task-name">Log Watcher</div><div class="task-desc">Tail a log file for keywords</div></div>
+      <div class="bot-task-card"><div class="task-icon">💾</div><div class="task-name">Disk Cleanup Alert</div><div class="task-desc">Warn when disk fills up</div></div>
+      <div class="bot-task-card"><div class="task-icon">📅</div><div class="task-name">Scheduled Report</div><div class="task-desc">Daily server summary at set time</div></div>
+      <div class="bot-task-card"><div class="task-icon">🚀</div><div class="task-name">Deployment Hook</div><div class="task-desc">Notify room on deploy events</div></div>
+      <div class="bot-task-card"><div class="task-icon">💿</div><div class="task-name">Backup Notifier</div><div class="task-desc">Confirm backup success/fail</div></div>
+      <div class="bot-task-card"><div class="task-icon">⚙️</div><div class="task-name">Custom Command</div><div class="task-desc">Run any shell command, send output</div></div>
+    </div>
+
+    <h3 class="sub-title">Bot commands</h3>
+    <pre><code># List all registered bots
+xtc list:bots
+
+# Stop a running bot
+xtc stop:bot 1
+
+# Delete a stopped bot
+xtc delete:bot 1
+
+# Delete all stopped bots at once
+xtc delete:bot all</code></pre>
+
+    <h3 class="sub-title">Architecture</h3>
+    <p class="body-text text-xs">The bot wizard runs on your Mac/Linux machine (client). After configuration it sends a <code>POST /bot/start</code> to the server, which spawns <code>bot_runner.py</code> as a background process on the VPS. The bot then reads its config from the database and starts monitoring.</p>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden">
+      <div class="terminal-body"><span class="t-dim">Mac                              VPS
+  │                               │
+  │  xtc start:bot                │
+  │  (setup wizard)               │
+  │                               │
+  │─── POST /bot/register ───────→│ save config to db
+  │─── POST /bot/start ──────────→│ spawn bot_runner.py
+  │                               │
+  │                               │ bot monitors VPS...
+  │                               │ POST /send → alerts to room
+  │                               │
+  │  xtc stop:bot 1               │
+  │─── POST /bot/kill ───────────→│ kill PID, update db
+</span></div>
+    </div>
+
+    <div class="mt-4 flex gap-2.5 items-start bg-blue/5 border border-blue/20 rounded-xl p-3.5 text-blue/80 text-xs">
+      <span class="text-sm mt-0.5">ℹ️</span>
+      <p class="m-0"><code>bot_runner.py</code> must be in the <code>xtc-server/</code> folder on your VPS. Install <code>psutil</code> on the VPS for resource monitoring: <code>pip3 install psutil</code></p>
+    </div>
+  </section>
+
+  <!-- 13 IDENTITY -->
+  <section class="section mb-16" id="identity">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">13</span> Identity &amp; security</h2>
+    <div class="bg-surface border border-border rounded-xl overflow-hidden my-3">
+      <div class="bg-surface/80 border-b border-border px-4 py-2.5 flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-500"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500"></div><span class="text-slate-500 text-[10px] font-mono ml-2">CLI identity flow</span></div>
+      <div class="terminal-body"><span class="t-out">machine UUID (IOPlatformUUID / /etc/machine-id)</span>
+       <span class="t-dim">↓</span>
 <span class="t-out">      CLI_PIN  (hardware-bound, auto-generated)</span>
-         <span class="t-dim">↓</span>
+       <span class="t-dim">↓</span>
 <span class="t-out">sent with every message and room operation</span>
-         <span class="t-dim">↓</span>
+       <span class="t-dim">↓</span>
 <span class="t-out">server: users table → username:PIN mapping</span>
-         <span class="t-dim">↓</span>
+       <span class="t-dim">↓</span>
 <span class="t-out">mismatch → 403  Identity mismatch. Wrong PIN.</span></div>
-      </div>
-      <h3 class="sub-title">Server-side validation</h3>
-      <div class="overflow-x-auto border border-border rounded-xl">
-        <table class="w-full text-xs">
-          <thead><tr class="border-b border-border bg-surface"><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Action</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Validation</th></tr></thead>
-          <tbody class="divide-y divide-border">
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Send message</td><td class="px-4 py-2.5 text-slate-400">Username + PIN must match registered record</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Create room</td><td class="px-4 py-2.5 text-slate-400">PIN stored as <code>creator_pin</code></td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Purge messages</td><td class="px-4 py-2.5 text-slate-400">Requester PIN must match <code>creator_pin</code></td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Delete room</td><td class="px-4 py-2.5 text-slate-400">Username + PIN must match creator</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Join private room</td><td class="px-4 py-2.5 text-slate-400">Room password (verified via bcrypt)</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Web login</td><td class="px-4 py-2.5 text-slate-400">Username + PIN must match registered record</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="body-text mt-4">Default setup uses <strong>HTTP</strong>, acceptable for private/internal networks. For public-facing deployments use HTTPS — see the next section.</p>
-    </section>
+    </div>
+    <div class="overflow-x-auto border border-border rounded-xl mt-4">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-border bg-surface"><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Action</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Validation</th></tr></thead>
+        <tbody class="divide-y divide-border">
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Send message</td><td class="px-4 py-2.5 text-slate-400">Username + PIN must match registered record</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Purge messages</td><td class="px-4 py-2.5 text-slate-400">Requester PIN must match <code>creator_pin</code></td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Delete room</td><td class="px-4 py-2.5 text-slate-400">Username + PIN must match creator</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5 text-slate-300">Bot stop/delete (web)</td><td class="px-4 py-2.5 text-slate-400">User must be registered on server (admin endpoints)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- 13 HTTPS -->
-    <section class="section mb-16" id="https">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">13</span> HTTPS setup</h2>
-      <p class="body-text">No client code changes needed. Just point your client at an <code>https://</code> URL after setup.</p>
-      <h3 class="sub-title">Option A — Caddy (recommended)</h3>
-      <p class="body-text text-xs">Automatically obtains and renews SSL certificates from Let's Encrypt.</p>
-      <pre><code>sudo apt install caddy -y
+  <!-- 14 HTTPS -->
+  <section class="section mb-16" id="https">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">14</span> HTTPS setup</h2>
+    <h3 class="sub-title">Caddy (recommended)</h3>
+    <pre><code>sudo apt install caddy -y
 
 # /etc/caddy/Caddyfile
 yourdomain.com {
@@ -756,11 +716,10 @@ yourdomain.com {
 }
 
 sudo systemctl reload caddy</code></pre>
-
-      <h3 class="sub-title">Option B — Nginx + Let's Encrypt</h3>
-      <pre><code>sudo apt install nginx certbot python3-certbot-nginx -y
+    <h3 class="sub-title">Nginx + Let's Encrypt</h3>
+    <pre><code>sudo apt install nginx certbot python3-certbot-nginx -y
 sudo certbot --nginx -d yourdomain.com</code></pre>
-      <pre><code>server {
+    <pre><code>server {
     listen 443 ssl;
     server_name yourdomain.com;
     ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
@@ -771,24 +730,20 @@ sudo certbot --nginx -d yourdomain.com</code></pre>
         proxy_set_header X-Real-IP $remote_addr;
     }
 }</code></pre>
-      <p class="body-text">After setup, update your client:</p>
-      <pre><code>xtc connect @yourdomain.com</code></pre>
-    </section>
+    <pre><code>xtc connect @yourdomain.com</code></pre>
+  </section>
 
-    <!-- 14 SERVER MANAGEMENT -->
-    <section class="section mb-16" id="server-mgmt">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">14</span> Server management</h2>
-      <h3 class="sub-title">Start / stop</h3>
-      <pre><code>python3 server.py start    # start in background
+  <!-- 15 SERVER MANAGEMENT -->
+  <section class="section mb-16" id="server-mgmt">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">15</span> Server management</h2>
+    <pre><code>python3 server.py start    # background
 python3 server.py stop     # stop
-python3 server.py          # run in foreground (debug)</code></pre>
-      <h3 class="sub-title">Check status &amp; logs</h3>
-      <pre><code>cat server.pid
-ps aux | grep server.py
+python3 server.py          # foreground (debug)
+
 tail -f server.log
-grep "ERROR\|Exception" server.log</code></pre>
-      <h3 class="sub-title">systemd service (auto-restart on reboot)</h3>
-      <pre><code># /etc/systemd/system/xtermchat.service
+cat server.pid</code></pre>
+    <h3 class="sub-title">systemd (auto-restart on reboot)</h3>
+    <pre><code># /etc/systemd/system/xtermchat.service
 [Unit]
 Description=XtermChat Server
 After=network.target
@@ -803,264 +758,217 @@ RestartSec=5
 
 [Install]
 WantedBy=multi-user.target</code></pre>
-      <pre><code>sudo systemctl daemon-reload
+    <pre><code>sudo systemctl daemon-reload
 sudo systemctl enable xtermchat
 sudo systemctl start xtermchat</code></pre>
-      <h3 class="sub-title">Update &amp; backup</h3>
-      <pre><code># Update
-cd xtc-server && python3 server.py stop && git pull && python3 server.py start
-
-# Backup — entire state is one file
+    <h3 class="sub-title">Update</h3>
+    <pre><code>cd xtc-server && python3 server.py stop && git pull && python3 server.py start
 cp xtc.db xtc_backup_$(date +%Y%m%d_%H%M).db</code></pre>
-    </section>
+  </section>
 
-    <!-- 15 DATABASE -->
-    <section class="section mb-16" id="database">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">15</span> Database</h2>
-      <p class="body-text">Everything is stored in <code>xtc.db</code> — a single SQLite file auto-created on first run.</p>
-      <div class="overflow-x-auto border border-border rounded-xl">
-        <table class="w-full text-xs">
-          <thead><tr class="border-b border-border bg-surface"><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Table</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Columns</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Purpose</th></tr></thead>
-          <tbody class="divide-y divide-border">
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>users</code></td><td class="px-4 py-2.5 text-slate-400"><code>username</code> PK, <code>pin</code></td><td class="px-4 py-2.5 text-slate-400">Identity registry</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>rooms</code></td><td class="px-4 py-2.5 text-slate-400"><code>name</code> UNIQUE, <code>creator</code>, <code>password</code>, <code>description</code>, <code>created_at</code>, <code>creator_pin</code></td><td class="px-4 py-2.5 text-slate-400">Room config &amp; ownership</td></tr>
-            <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>messages</code></td><td class="px-4 py-2.5 text-slate-400"><code>id</code> AI, <code>room</code>, <code>sender</code>, <code>pin</code>, <code>content</code>, <code>timestamp</code></td><td class="px-4 py-2.5 text-slate-400">Message history</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <pre><code># Inspect with check_db.py
-python3 check_db.py
+  <!-- 16 DATABASE -->
+  <section class="section mb-16" id="database">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">16</span> Database</h2>
+    <p class="body-text">Everything is stored in <code>xtc.db</code> — a single SQLite file auto-created on first run.</p>
+    <div class="overflow-x-auto border border-border rounded-xl">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-border bg-surface"><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Table</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Columns</th><th class="text-left px-4 py-2.5 font-mono text-[10px] text-slate-500 uppercase tracking-wider">Purpose</th></tr></thead>
+        <tbody class="divide-y divide-border">
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>users</code></td><td class="px-4 py-2.5 text-slate-400"><code>username</code> PK, <code>pin</code></td><td class="px-4 py-2.5 text-slate-400">Identity registry</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>rooms</code></td><td class="px-4 py-2.5 text-slate-400"><code>name</code>, <code>creator</code>, <code>password</code>, <code>description</code>, <code>created_at</code>, <code>creator_pin</code></td><td class="px-4 py-2.5 text-slate-400">Room config &amp; ownership</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>messages</code></td><td class="px-4 py-2.5 text-slate-400"><code>id</code>, <code>room</code>, <code>sender</code>, <code>pin</code>, <code>content</code>, <code>timestamp</code></td><td class="px-4 py-2.5 text-slate-400">Message history</td></tr>
+          <tr class="hover:bg-white/[.02]"><td class="px-4 py-2.5"><code>bots</code></td><td class="px-4 py-2.5 text-slate-400"><code>id</code>, <code>name</code>, <code>pin</code>, <code>room</code>, <code>host</code>, <code>tasks</code> JSON, <code>status</code>, <code>created_at</code></td><td class="px-4 py-2.5 text-slate-400">Bot configurations</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <pre><code>python3 check_db.py      # interactive inspector
 
-# Direct SQLite
 sqlite3 xtc.db
 .tables
 SELECT * FROM rooms;
+SELECT * FROM bots WHERE status='active';
 SELECT COUNT(*) FROM messages WHERE room='general';
-SELECT * FROM messages ORDER BY id DESC LIMIT 20;
-.quit
+.quit</code></pre>
+  </section>
 
-# Full reset
-python3 server.py stop && rm xtc.db && python3 server.py start</code></pre>
-    </section>
+  <!-- 17 API -->
+  <section class="section mb-16" id="api">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">17</span> API reference</h2>
+    <p class="body-text">Base URL: <code>http://YOUR_SERVER:8080</code> — all endpoints return JSON.</p>
+    <div class="space-y-3">
 
-    <!-- 16 API -->
-    <section class="section mb-16" id="api">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">16</span> API reference</h2>
-      <p class="body-text">Base URL: <code>http://YOUR_SERVER:8080</code> — all endpoints return JSON.</p>
-
-      <!-- API blocks -->
-      <div class="space-y-3">
-        <div class="bg-surface border border-border rounded-xl overflow-hidden">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">GET</span>
-            <span class="font-mono text-sm text-slate-200">/</span>
-            <span class="text-slate-500 text-xs ml-auto">Health check</span>
-          </div>
-          <pre class="m-0 rounded-none border-0"><code>{"status": "online", "service": "XtermChat Gateway", "version": "1.1"}</code></pre>
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-get">GET</span><span class="font-mono text-sm text-slate-200">/</span><span class="text-slate-500 text-xs ml-auto">Health check</span>
         </div>
-
-        <div class="bg-surface border border-border rounded-xl overflow-hidden">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue/10 text-blue border border-blue/30">POST</span>
-            <span class="font-mono text-sm text-slate-200">/login</span>
-            <span class="text-slate-500 text-xs ml-auto">Register or verify identity</span>
-          </div>
-          <pre class="m-0 rounded-none border-0"><code>// Request
-{"user": "ketut", "pin": "12345"}
-
-// 200 — PIN matches    {"status": "success", "message": "Welcome back"}
-// 201 — new user       {"status": "success", "message": "New identity registered"}
-// 403 — PIN mismatch   {"status": "failed", "message": "Identity locked to another device/PIN."}</code></pre>
-        </div>
-
-        <div class="bg-surface border border-border rounded-xl overflow-hidden">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">GET</span>
-            <span class="font-mono text-sm text-slate-200">/rooms</span>
-            <span class="text-slate-500 text-xs ml-auto">List all rooms</span>
-          </div>
-          <pre class="m-0 rounded-none border-0"><code>{"status": "success", "count": 2, "rooms": [
-  {"name": "general", "has_password": false, "creator": "KETUT",
-   "description": "General chat", "created_at": 1741234567}
-]}</code></pre>
-        </div>
-
-        <div class="bg-surface border border-border rounded-xl overflow-hidden">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue/10 text-blue border border-blue/30">POST</span>
-            <span class="font-mono text-sm text-slate-200">/send</span>
-            <span class="text-slate-500 text-xs ml-auto">Send a message</span>
-          </div>
-          <pre class="m-0 rounded-none border-0"><code>{"room": "general", "password": "", "user": "KETUT", "content": "Hello world", "pin": "UUID"}
-// 201 → ok | 403 → PIN mismatch | 400 → empty or too long (max 4000 chars)</code></pre>
-        </div>
-
-        <div class="bg-surface border border-border rounded-xl overflow-hidden">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-green-950 text-green-400 border border-green-900">GET</span>
-            <span class="font-mono text-sm text-slate-200">/messages/&lt;room&gt;</span>
-            <span class="text-slate-500 text-xs ml-auto">Get messages</span>
-          </div>
-          <pre class="m-0 rounded-none border-0"><code>GET /messages/general?password=
-// Response: [{"sender": "KETUT", "content": "Hello", "pin": "UUID", "timestamp": "2026-03-14 08:30:00"}]
-// 401 → password required</code></pre>
-        </div>
-
-        <div class="bg-surface border border-border rounded-xl overflow-hidden">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue/10 text-blue border border-blue/30">POST</span>
-            <span class="font-mono text-sm text-slate-200">/purge-chat</span>
-            <span class="text-slate-500 text-xs ml-auto">Delete all messages (creator only)</span>
-          </div>
-          <pre class="m-0 rounded-none border-0"><code>{"room": "general", "user": "ketut", "pin": "UUID"}
-// 200 → ok | 403 → Unauthorized: Hardware ID mismatch</code></pre>
-        </div>
-
-        <div class="bg-surface border border-border rounded-xl overflow-hidden">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue/10 text-blue border border-blue/30">POST</span>
-            <span class="font-mono text-sm text-slate-200">/delete-room</span>
-            <span class="text-slate-500 text-xs ml-auto">Delete room permanently (creator only)</span>
-          </div>
-          <pre class="m-0 rounded-none border-0"><code>{"room": "general", "user": "ketut", "pin": "UUID"}
-// 200 → ok | 403 → Unauthorized: Hardware ID mismatch</code></pre>
-        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"status": "online", "service": "XtermChat Gateway", "version": "1.1"}</code></pre>
       </div>
-    </section>
 
-    <!-- 17 TROUBLESHOOTING -->
-    <section class="section mb-16" id="troubleshooting">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">17</span> Troubleshooting</h2>
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-post">POST</span><span class="font-mono text-sm text-slate-200">/login</span><span class="text-slate-500 text-xs ml-auto">Register or verify identity</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"user": "ketut", "pin": "12345"}
+// 200 → Welcome back  |  201 → Registered  |  403 → PIN mismatch</code></pre>
+      </div>
 
-      <h3 class="sub-title">Connection refused</h3>
-      <pre><code>curl http://YOUR_IP:8080       # test direct access
-sudo ufw status               # check firewall
-cat server.pid                # check if server running
-ps aux | grep server.py</code></pre>
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-get">GET</span><span class="font-mono text-sm text-slate-200">/rooms</span><span class="text-slate-500 text-xs ml-auto">List all rooms</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"rooms": [{"name": "general", "has_password": false, "creator": "KETUT", ...}]}</code></pre>
+      </div>
 
-      <h3 class="sub-title">Identity locked to another device</h3>
-      <p class="body-text text-xs">Username registered from a different machine. Options:</p>
-      <pre><code># Option 1 — use a different system username
-# Option 2 — admin removes the old entry
-sqlite3 xtc.db "DELETE FROM users WHERE username='yourname';"</code></pre>
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-post">POST</span><span class="font-mono text-sm text-slate-200">/send</span><span class="text-slate-500 text-xs ml-auto">Send a message</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"room": "general", "user": "KETUT", "content": "hello", "pin": "UUID", "password": ""}
+// 201 → ok  |  403 → PIN mismatch  |  400 → empty / too long</code></pre>
+      </div>
 
-      <h3 class="sub-title">Access denied on purge or delete</h3>
-      <p class="body-text text-xs">You must be on the same machine that created the room. Hardware PIN is device-specific.</p>
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-get">GET</span><span class="font-mono text-sm text-slate-200">/messages/&lt;room&gt;</span><span class="text-slate-500 text-xs ml-auto">Get messages</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>GET /messages/general?password=
+// [{"sender": "KETUT", "content": "hello", "timestamp": "2026-03-15 08:30:00"}]
+// 401 → password required</code></pre>
+      </div>
 
-      <h3 class="sub-title">Server won't start — port in use</h3>
-      <pre><code>sudo lsof -i :8080
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-post">POST</span><span class="font-mono text-sm text-slate-200">/bot/register</span><span class="text-slate-500 text-xs ml-auto">Register a new bot</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"name": "MONITOR", "pin": "UUID", "room": "alerts", "host": "...", "tasks": [...]}
+// 201 → {"bot_id": 1}</code></pre>
+      </div>
+
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-post">POST</span><span class="font-mono text-sm text-slate-200">/bot/start</span><span class="text-slate-500 text-xs ml-auto">Spawn bot on VPS</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"bot_id": 1, "pin": "UUID"}
+// 200 → {"pid": 24891}</code></pre>
+      </div>
+
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-get">GET</span><span class="font-mono text-sm text-slate-200">/bot/list/all</span><span class="text-slate-500 text-xs ml-auto">List all bots (no PIN filter)</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>// Returns all bots regardless of who created them
+{"bots": [{"id": 1, "name": "MONITOR", "status": "active", "tasks": [...]}]}</code></pre>
+      </div>
+
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-post">POST</span><span class="font-mono text-sm text-slate-200">/bot/kill</span><span class="text-slate-500 text-xs ml-auto">Kill bot process (owner only)</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"bot_id": 1, "pin": "UUID"}   // pin must match bot's registered PIN
+// 200 → {"pid": 24891}</code></pre>
+      </div>
+
+      <div class="bg-surface border border-border rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <span class="method method-post">POST</span><span class="font-mono text-sm text-slate-200">/bot/admin/kill</span><span class="text-slate-500 text-xs ml-auto">Kill bot (any registered user)</span>
+        </div>
+        <pre class="m-0 rounded-none border-0"><code>{"bot_id": 1, "pin": "any-registered-user-pin"}
+// Used by web admin to manage CLI-created bots</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 18 TROUBLESHOOTING -->
+  <section class="section mb-16" id="troubleshooting">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">18</span> Troubleshooting</h2>
+
+    <h3 class="sub-title">Connection refused</h3>
+    <pre><code>curl http://YOUR_IP:8080
+sudo ufw status
+cat server.pid && ps aux | grep server.py</code></pre>
+
+    <h3 class="sub-title">Identity locked to another device</h3>
+    <pre><code>sqlite3 xtc.db "DELETE FROM users WHERE username='yourname';"</code></pre>
+
+    <h3 class="sub-title">Port in use</h3>
+    <pre><code>sudo lsof -i :8080
 sudo kill -9 &lt;PID&gt;
 rm server.pid && python3 server.py start</code></pre>
 
-      <h3 class="sub-title">Copy not working (Linux)</h3>
-      <pre><code>sudo apt install xclip   # or: sudo apt install xsel</code></pre>
+    <h3 class="sub-title">Bot not starting</h3>
+    <pre><code># Check bot_runner.py is in xtc-server/
+ls xtc-server/bot_runner.py
 
-      <h3 class="sub-title">Chat scroll not working</h3>
-      <p class="body-text text-xs">Minimum terminal size is 80×24. Press <kbd>Tab</kbd> to enter CHAT MODE first, then use arrow keys or PageUp/PageDown.</p>
+# Check log
+cat ~/.xtc_bot_1.log
 
-      <h3 class="sub-title">Server crashed / not responding</h3>
-      <pre><code>tail -50 server.log
-rm server.pid && python3 server.py start</code></pre>
-    </section>
+# Make sure psutil is installed on VPS
+pip3 install psutil</code></pre>
 
-    <!-- 18 FAQ -->
-    <section class="section mb-16" id="faq">
-      <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">18</span> FAQ</h2>
+    <h3 class="sub-title">Web admin blank / 500 error</h3>
+    <p class="body-text text-xs">Make sure <code>app.py</code> uses <code>send_from_directory</code> (not <code>render_template</code>) — Flask's Jinja2 conflicts with HTML comment syntax in the files.</p>
+    <pre><code># Correct app.py pattern:
+from flask import Flask, send_from_directory
+@app.route('/dashboard')
+def dashboard():
+    return send_from_directory(html_dir, 'dashboard.html')</code></pre>
 
-      <div class="space-y-4">
-        <div class="border-b border-border pb-4">
-          <h3 class="sub-title !mt-0 !mb-1">Can multiple people be in the same room at the same time?</h3>
-          <p class="body-text text-xs m-0">Yes. Messages are polled every 2 seconds. All connected users see new messages automatically.</p>
-        </div>
-        <div class="border-b border-border pb-4">
-          <h3 class="sub-title !mt-0 !mb-1">Are messages stored permanently?</h3>
-          <p class="body-text text-xs m-0">Until the creator runs <code>:purge</code> (wipes messages, keeps room) or <code>xtc delete:room</code> (removes everything). Delete <code>xtc.db</code> to reset completely.</p>
-        </div>
-        <div class="border-b border-border pb-4">
-          <h3 class="sub-title !mt-0 !mb-1">Can I run server and client on the same machine?</h3>
-          <pre class="!mt-1"><code>xtc connect @localhost:8080</code></pre>
-        </div>
-        <div class="border-b border-border pb-4">
-          <h3 class="sub-title !mt-0 !mb-1">What if I reinstall my OS or switch machines?</h3>
-          <p class="body-text text-xs m-0">Hardware PIN changes. Admin can reset:</p>
-          <pre class="!mt-1"><code>sqlite3 xtc.db "DELETE FROM users WHERE username='yourname';"</code></pre>
-        </div>
-        <div class="border-b border-border pb-4">
-          <h3 class="sub-title !mt-0 !mb-1">Can web and CLI users chat together?</h3>
-          <p class="body-text text-xs m-0">Yes. Both use the same API and see each other's messages in real time.</p>
-        </div>
-        <div class="border-b border-border pb-4">
-          <h3 class="sub-title !mt-0 !mb-1">How many users can XtermChat handle?</h3>
-          <p class="body-text text-xs m-0">SQLite handles millions of rows comfortably. Fine for 2–50 people on the cheapest VPS. For very high traffic, migrate to PostgreSQL by modifying <code>db.py</code>.</p>
-        </div>
-        <div class="pb-4">
-          <h3 class="sub-title !mt-0 !mb-1">How do I update?</h3>
-          <pre class="!mt-1"><code># Server
+    <h3 class="sub-title">Copy not working (Linux)</h3>
+    <pre><code>sudo apt install xclip   # or xsel</code></pre>
+  </section>
+
+  <!-- 19 FAQ -->
+  <section class="section mb-16" id="faq">
+    <h2 class="sec-title"><span class="text-xs text-blue font-normal px-1.5 py-0.5 bg-blue/10 border border-blue/30 rounded font-mono">19</span> FAQ</h2>
+    <div class="space-y-5">
+      <div class="border-b border-border pb-5">
+        <h3 class="sub-title !mt-0 !mb-1">Can CLI and web users chat together?</h3>
+        <p class="body-text text-xs m-0">Yes. Both use the same API and see each other's messages in real time in the same rooms.</p>
+      </div>
+      <div class="border-b border-border pb-5">
+        <h3 class="sub-title !mt-0 !mb-1">Can I manage CLI-created bots from the web admin?</h3>
+        <p class="body-text text-xs m-0">Yes. The web admin uses <code>/bot/list/all</code> to show all bots, and <code>/bot/admin/kill</code> / <code>/bot/admin/delete</code> to manage them using your web user PIN (which must be a registered user on the server).</p>
+      </div>
+      <div class="border-b border-border pb-5">
+        <h3 class="sub-title !mt-0 !mb-1">Where does bot_runner.py need to be?</h3>
+        <p class="body-text text-xs m-0">Always in <code>xtc-server/</code> on the VPS — never on your local machine. The server spawns it directly.</p>
+      </div>
+      <div class="border-b border-border pb-5">
+        <h3 class="sub-title !mt-0 !mb-1">Are messages stored permanently?</h3>
+        <p class="body-text text-xs m-0">Until <code>:purge</code> (wipes messages, keeps room) or <code>xtc delete:room</code> (removes everything). Delete <code>xtc.db</code> for a full reset.</p>
+      </div>
+      <div class="border-b border-border pb-5">
+        <h3 class="sub-title !mt-0 !mb-1">What if I switch machines?</h3>
+        <p class="body-text text-xs m-0">Hardware PIN changes. Admin resets the old entry:</p>
+        <pre class="!mt-1"><code>sqlite3 xtc.db "DELETE FROM users WHERE username='yourname';"</code></pre>
+      </div>
+      <div class="pb-4">
+        <h3 class="sub-title !mt-0 !mb-1">How do I update?</h3>
+        <pre class="!mt-1"><code># Server
 cd xtc-server && python3 server.py stop && git pull && python3 server.py start
 
 # Client
 cd xtc-client && git pull && make install</code></pre>
-          <p class="body-text text-xs m-0 mt-2">Database and config are preserved through updates.</p>
-        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FOOTER -->
-    <footer class="pt-8 pb-16 border-t border-border flex flex-wrap justify-between items-center gap-4">
-      <div>
-        <div class="font-mono text-xs text-slate-400">XtermChat v1.0.0</div>
-        <div class="text-[10px] text-dim mt-1">MIT License · March 2026</div>
-      </div>
-      <div class="flex gap-5">
-        <a href="https://github.com/dnysaz/xtc-server" class="font-mono text-[11px] text-slate-500 hover:text-blue transition-colors no-underline">xtc-server ↗</a>
-        <a href="https://github.com/dnysaz/xtc-client" class="font-mono text-[11px] text-slate-500 hover:text-blue transition-colors no-underline">xtc-client ↗</a>
-      </div>
-    </footer>
+  <!-- FOOTER -->
+  <footer class="pt-8 pb-16 border-t border-border flex flex-wrap justify-between items-center gap-4">
+    <div>
+      <div class="font-mono text-xs text-slate-400">XtermChat v1.0.0</div>
+      <div class="text-[10px] text-dim mt-1">MIT License · March 2026</div>
+    </div>
+    <div class="flex gap-5">
+      <a href="https://github.com/dnysaz/xtc-server" class="font-mono text-[11px] text-slate-500 hover:text-blue transition-colors no-underline">xtc-server ↗</a>
+      <a href="https://github.com/dnysaz/xtc-client" class="font-mono text-[11px] text-slate-500 hover:text-blue transition-colors no-underline">xtc-client ↗</a>
+    </div>
+  </footer>
 
-  </div><!-- /max-w -->
-</div><!-- /lg:pl-60 -->
+</div>
+</div>
 
-<script>
-// ── Scrollspy ──
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.section');
-
-function updateActive() {
-  let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 100) current = s.id;
-  });
-  navLinks.forEach(l => {
-    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
-  });
-}
-window.addEventListener('scroll', updateActive, { passive: true });
-updateActive();
-
-// ── Sidebar open/close ──
-function openSidebar() {
-  document.getElementById('sidebar').style.transform = 'translateX(0)';
-  document.getElementById('overlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-  // Only actually hide on mobile (lg+ always visible via CSS)
-  if (window.innerWidth < 1024) {
-    document.getElementById('sidebar').style.transform = 'translateX(-100%)';
-    document.getElementById('overlay').classList.remove('show');
-    document.body.style.overflow = '';
-  }
-}
-
-// On resize, reset sidebar if desktop
-window.addEventListener('resize', () => {
-  if (window.innerWidth >= 1024) {
-    document.getElementById('sidebar').style.transform = '';
-    document.getElementById('overlay').classList.remove('show');
-    document.body.style.overflow = '';
-  }
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
